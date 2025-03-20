@@ -16,6 +16,9 @@ const dbconnection = require("./db//dbConfig");
 
 //importing  authentication middleware
 const authMiddleware = require("./middleware/authMiddleware");
+const questionRouter = require("./routes/questionRoute");
+app.use('/api/question',authMiddleware,questionRouter);
+
 
 // cors middleware
 app.use(cors());
