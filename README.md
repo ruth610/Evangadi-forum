@@ -6,17 +6,6 @@ Welcome to the **Evangadi Forum** – a collaborative **Full Stack Web Applicati
 
 ---
 
-## **📌 Table of Contents**
-
-- [About the Project](#about-the-project)
-- [Tech Stack](#tech-stack)
-- [Project Structure & Responsibilities](#project-structure--responsibilities)
-- [Setup Instructions](#setup-instructions)
-- [API Documentation](#api-documentation)
-- [Contribution Guide](#contribution-guide)
-- [License](#license)
-
----
 
 ## **📌 About the Project**
 
@@ -76,8 +65,7 @@ Evangadi-forum/
 │   │   │   ├── Landing/     ← [Amir Ali]
 │   │   │   ├── QuestionDetail/    ← [Ashenafi Getachew]
 │── .gitignore            # Ignore unnecessary files
-│── package-lock.json     # Lock file for dependencies
-│── README.md             # Project documentation
+
 ```
 
 ---
