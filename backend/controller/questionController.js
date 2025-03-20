@@ -23,10 +23,9 @@ async function postQuestion(req,res){
             message:"Question created successfully",
         });
     } catch (error) {
-        console.log(error.message);
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-            error:"Internal Server Error",
-            message:"An unexpected error occurred."
+          error: "Internal Server Error",
+          message: "An unexpected error occurred.",
         });
     }
 }
