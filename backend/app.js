@@ -5,10 +5,8 @@ const cors = require("cors");
 const PORT = 5500;
 const dbconnection = require("./db//dbConfig");
 
-
-
 //importing user question and answer route
-// const userRoute = require("./routes/userRoute");
+const userRoute = require("./routes/userRoute");
 // const questionRoute = require("./routes/questionRoute");
 // const answerRoute = require("./routes/answerRoute");
 
@@ -16,8 +14,8 @@ const dbconnection = require("./db//dbConfig");
 
 //importing  authentication middleware
 const authMiddleware = require("./middleware/authMiddleware");
-const questionRouter = require("./routes/questionRoute");
-app.use('/api/question',authMiddleware,questionRouter);
+// const questionRouter = require("./routes/questionRoute");
+// app.use('/api/question',authMiddleware,questionRouter);
 
 
 // cors middleware
@@ -28,7 +26,7 @@ app.use(express.json());
 
 // user , question and answer route
 
-// app.use("/api/user", userRoute);
+app.use("/api/user", userRoute);
 // app.use("/api/question", questionRoute);
 // app.use("/api/answer", answerRoute);
 

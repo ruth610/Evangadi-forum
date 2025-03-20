@@ -16,7 +16,7 @@ async function postAnswer(req, res) {
 
     // Check if question exists
     const [questionExists] = await dbConnection.query(
-      "SELECT * FROM questions WHERE questionid = ?",
+      "SELECT * FROM questionTabel WHERE questionid = ?",
       [questionid]
     );
 
@@ -29,7 +29,7 @@ async function postAnswer(req, res) {
 
     // Insert answer into the database
     await dbConnection.query(
-      "INSERT INTO answers (userid, questionid, answer) VALUES (?, ?, ?)",
+      "INSERT INTO questionTabel (userid, questionid, answer) VALUES (?, ?, ?)",
       [userid, questionid, answer]
     );
 
