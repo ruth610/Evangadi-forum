@@ -8,3 +8,4 @@ const { check, login, register } = require("../controller/userController");
 
 // register routes
 router.post("/register", register);
+router.post('/login', login);
