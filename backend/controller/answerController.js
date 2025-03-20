@@ -1,4 +1,4 @@
-const dbconnection = require("./../db/dbConfig");
+const dbconnection = require('./../db/dbConfig')
 const { StatusCodes } = require("http-status-codes");
 // post answer for a question
 async function postAnswer(req, res) {
@@ -15,7 +15,7 @@ async function postAnswer(req, res) {
     }
 
     // Check if question exists
-    const [questionExists] = await dbConnection.query(
+    const [questionExists] = await dbconnection.query(
       "SELECT * FROM questionTabel WHERE questionid = ?",
       [questionid]
     );
@@ -28,7 +28,7 @@ async function postAnswer(req, res) {
     }
 
     // Insert answer into the database
-    await dbConnection.query(
+    await dbconnection.query(
       "INSERT INTO answertable(userid, questionid, answer	) VALUES (?, ?, ?)",
       [userid, questionid, answer]
     );
