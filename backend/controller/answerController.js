@@ -1,5 +1,5 @@
-const dbConnection = require("../db/dbConfig");
-
+const dbconnection = require("./../db/dbConfig");
+const { StatusCodes } = require("http-status-codes");
 // post answer for a question
 async function postAnswer(req, res) {
   try {
@@ -29,7 +29,7 @@ async function postAnswer(req, res) {
 
     // Insert answer into the database
     await dbConnection.query(
-      "INSERT INTO questionTabel (userid, questionid, answer) VALUES (?, ?, ?)",
+      "INSERT INTO answertable(userid, questionid, answer	) VALUES (?, ?, ?)",
       [userid, questionid, answer]
     );
 
@@ -42,3 +42,34 @@ async function postAnswer(req, res) {
     });
   }
 }
+async function getAnswer(req, res) {
+  const questionId = req.params.question_id;
+  try {
+    const [result] = await dbconnection.query(
+      `SELECT answerid, answer, username
+FROM answerTable
+JOIN userTable USING (userid)
+WHERE questionid = ?
+ORDER BY answerid;
+  `,
+      [questionId]
+    );
+    if (result.length === 0) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        error: "Not Found",
+        message: "The requested question could not be found.",
+      });
+    } else {
+      return res.status(StatusCodes.OK).json({
+        answer: result,
+      });
+    }
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      error: "Not Found",
+      message: "The requested question could not be found.",
+    });
+  }
+}
+
+module.exports = { postAnswer, getAnswer };
