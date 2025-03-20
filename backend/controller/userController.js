@@ -82,5 +82,10 @@ async function login(req,res){
     }
 }
 
+async function checkUser(req, res) {
+  const { username, userid } = req.user;
+  res.status(StatusCodes.OK).json({ message: "Valid user", username, userid });
+}
 
-module.exports = { register, login };
+
+module.exports = { register, login, checkUser };
