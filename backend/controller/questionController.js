@@ -3,7 +3,6 @@ const dbConnection = require('../db/dbConfig');
 const { v4: uuidv4 } = require('uuid');
 async function postQuestion(req,res){
     try {
-        // console.log(qid);
         const {description,title,tag} = req.body;
         const tagToInsert = tag? tag:null;
         if(!description || !title){
@@ -12,15 +11,14 @@ async function postQuestion(req,res){
                 message:"Please provide all required fields",
             });
         }
-        // console.log(description);
-        // console.log(title);
-        const {userid,username} = req.user;
+        const {userid} = req.user;
         // generating a key for the every question that is being posted by the users
-        const questionid = uuidv4()
+        const questionid = uuidv4();
         //here first we have to insert our data into the question table 
-        await dbConnection.query(`INSERT INTO questionTabel(userid,qid,description,title,tag) VALUES(?,?,?,?,?)`,
-            [userid,questionid,description,title,tagToInsert]);
-        // console.log("this is the user that is logged in",userid,username);
+        await dbConnection.query(
+          `INSERT INTO questionTabel(userid,questionid,description,title,tag) VALUES(?,?,?,?,?)`,
+          [userid, questionid, description, title, tagToInsert]
+        );
         return res.status(StatusCodes.CREATED).json({
             message:"Question created successfully",
         });

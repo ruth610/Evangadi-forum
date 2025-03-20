@@ -29,7 +29,7 @@ async function postAnswer(req, res) {
 
     // Insert answer into the database
     await dbConnection.query(
-      "INSERT INTO questionTabel (userid, questionid, answer) VALUES (?, ?, ?)",
+      "INSERT INTO answertable(userid, questionid, answer	) VALUES (?, ?, ?)",
       [userid, questionid, answer]
     );
 
@@ -42,3 +42,5 @@ async function postAnswer(req, res) {
     });
   }
 }
+
+module.exports = { postAnswer };
