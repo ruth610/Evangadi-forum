@@ -20,12 +20,9 @@ const authMiddleware = require("./middleware/authMiddleware");
 
 // cors middleware
 app.use(cors());
-
-// json middleware(extract json data)
 app.use(express.json());
 
 // user , question and answer route
-
 app.use("/api/user", userRoute);
 // app.use("/api/question", questionRoute);
 // app.use("/api/answer", answerRoute);
