@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Instance from "./axiosConfig";
 import { useNavigate } from "react-router-dom";
 import Register from "./pages/../components/Auth/Register";
+import Landing from "./pages/Landing/Landing";
 
 export const AppState = createContext();
 
@@ -29,7 +30,7 @@ function App() {
   return (
     <AppState.Provider value={{ user, setUser }}>
       <Routes>
-        <Route path="/" element={<Register />} />
+        <Route path="/" element={<Landing />} />
       </Routes>
     </AppState.Provider>
   );

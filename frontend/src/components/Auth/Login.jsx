@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useRef } from "react";
 import Instance from "../../axiosConfig";
 import { Link, useNavigate } from "react-router-dom";
-import Layout from "../Layout/Layout";
 import styles from './auth.module.css'
 import { FaRegEyeSlash } from "react-icons/fa";
 import { GoEye } from "react-icons/go";
