@@ -1,0 +1,31 @@
+.header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.375);
+  }
+  .header img {
+    height: 25px;
+  }
+  .navbar ul {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+  }
+  .navbar button {
+    background-color: #1141df;
+    color: white;
+    border: none;
+    padding: 8px 30px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .navbar button:hover {
+    background-color: #0d34c0;
+  }
+  .navbar ul li {
+    color: rgb(91, 90, 90);
+  }
