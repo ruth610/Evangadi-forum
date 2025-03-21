@@ -29,4 +29,43 @@ async function postQuestion(req,res){
         });
     }
 }
-module.exports = {postQuestion}
+
+
+
+
+
+
+//  below singleQuestion is Abraham Woldesenbet Task
+
+async function singleQuestion(req, res) {
+   
+
+    try {
+        const { id } = req.params;  
+
+        const [rows] = await dbConnection.query(
+            `SELECT questionid,title, description AS content,userid AS user_id FROM questionTabel WHERE questionid = ?`, [id]
+        );
+
+        if (rows.length === 0) {
+            return res.status(StatusCodes.NOT_FOUND).json({
+                error: "Not Found",
+                message: "The requested question could not be found",
+            });
+        }
+
+        return res.status(StatusCodes.OK).json({
+            message: "Question retrieved successfully.",
+            question: rows[0],
+        });
+    } catch (error) {
+        console.error("Error fetching question:", error);
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            error: "Internal Server Error",
+            message: "An unexpected error occurred.",
+        });
+    }
+}
+
+
+module.exports = { postQuestion, singleQuestion }
