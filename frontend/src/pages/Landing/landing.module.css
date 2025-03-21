@@ -1,0 +1,29 @@
+.landing_container {
+    padding: 30px  15px;
+    
+}
+.landing_container .landing_about_container{
+display: none;
+}
+@media (min-width:601px ) {
+.landing_container{
+    height: 100vh;
+    display: flex;
+}
+.landing_container > div {
+    width: 50%;
+} 
+.landing_container .landing_about_container{
+display: block;
+margin-top: 40px;
+}
+.question_paragraph h1 {
+    font-size: 35px;
+    color: #e33f00;
+    font-weight: bold;
+}
+.landing_container {
+    padding: 30px  15px;
+    
+}
+}

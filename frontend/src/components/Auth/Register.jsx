@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import Instance from "../../axiosConfig";
 import { Link, useNavigate } from "react-router-dom";
 import Layout from "../Layout/Layout";
-import styles from "./login.module.css";
+import styles from "./auth.module.css";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { GoEye } from "react-icons/go";
 function Register({ isLogin, setIsLogin }) {
@@ -59,7 +59,9 @@ function Register({ isLogin, setIsLogin }) {
   }
 
   return (
-    <section className={⁠ ${styles.input_container} ${styles.rigister_container} ⁠}>
+    <section
+      className={`${styles.input_container} ${styles.rigister_container}`}
+    >
       <section className={styles.input_form}>
         <h2>Join the network</h2>
         <p className={styles.create_account}>
@@ -78,15 +80,15 @@ function Register({ isLogin, setIsLogin }) {
           <div>
             <input ref={userNameDom} type="text" placeholder="username" />
           </div>
-       <div className={styles.names}>
+          <div className={styles.names}>
             <input type="text" placeholder="first name" ref={firstNameDom} />
             <input type="text" placeholder="last name" ref={lastNameDom} />
           </div>
-       
+
           <div>
             <input type="email" placeholder="email" ref={emailDom} />
           </div>
-          
+
           <div className={styles.password_container}>
             <input type={textpass} placeholder="password" ref={passwordDom} />
             <span onClick={passToggler}>
@@ -112,13 +114,13 @@ function Register({ isLogin, setIsLogin }) {
           </p>
           <Link to={"/login"}>
             <button
-              className={⁠ ${styles.login} ${styles.register_btn} ⁠}
+              className={`${styles.login} ${styles.register_btn}`}
               type="submit"
             >
               Agree and Join
             </button>{" "}
           </Link>
-          <Link className={⁠ ${styles.sign_in} ${styles.center} ⁠} to={"/login"}>
+          <Link className={`${styles.sign_in} ${styles.center}`} to={"/login"}>
             Already have an account?
           </Link>
         </div>
