@@ -1,10 +1,14 @@
 const express = require("express");
 const {
   postQuestion,
-  allQuestion,
+  getallQuestion,
+  singleQuestion
 } = require("../controller/questionController");
+
 const questionRouter = express.Router();
 
 questionRouter.post("/", postQuestion);
-questionRouter.get("/", allQuestion);
+questionRouter.get("/", getallQuestion);
+questionRouter.get("/:question_id", singleQuestion);
+
 module.exports = questionRouter;

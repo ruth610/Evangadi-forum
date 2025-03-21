@@ -42,11 +42,12 @@ async function postAnswer(req, res) {
     });
   }
 }
+
 async function getAnswer(req, res) {
   const questionId = req.params.question_id;
   try {
     const [result] = await dbconnection.query(
-      `SELECT answerid, answer, username
+      `SELECT answerid, answer as content, username as user_name
 FROM answerTable
 JOIN userTable USING (userid)
 WHERE questionid = ?
@@ -71,5 +72,6 @@ ORDER BY answerid;
     });
   }
 }
+
 
 module.exports = { postAnswer, getAnswer };
