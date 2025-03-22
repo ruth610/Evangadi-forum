@@ -1,7 +1,3 @@
-* {
-  font-family:'Courier New', Courier, monospace;
-  /* background-color: rgb(233, 233, 233); */
-}
 .container {
   width: 1250px;
   display: flex;

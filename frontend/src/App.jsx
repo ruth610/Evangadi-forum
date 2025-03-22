@@ -2,12 +2,9 @@ import { useEffect, useState, createContext } from "react";
 import { Route, Routes } from "react-router-dom";
 import Instance from "./axiosConfig";
 import { useNavigate } from "react-router-dom";
-import Register from "./pages/../components/Auth/Register";
 import Landing from "./pages/Landing/Landing";
-import AskQuestion from "./pages/AskQuestion/AskQuestion";
-import Login from "./components/Auth/Login";
 import HomePage from "./pages/HomePage/HomePage";
-
+import AskQuestion from "./pages/AskQuestion/AskQuestion";
 export const AppState = createContext();
 
 function App() {
@@ -22,8 +19,9 @@ function App() {
         },
       });
       setUser(data);
+      navigate('/home')
     } catch (error) {
-      console.log(error.respose);
+      console.log(error);
       navigate("/");
     }
   }
@@ -32,10 +30,11 @@ function App() {
   }, []);
   return (
     <AppState.Provider value={{ user, setUser }}>
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/home" element={<HomePage />} />
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/Ask" element={<AskQuestion />} />
+        </Routes>
     </AppState.Provider>
   );
 }

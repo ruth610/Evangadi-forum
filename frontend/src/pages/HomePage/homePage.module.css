@@ -1,6 +1,6 @@
 .homepage{
     width: 100%;
-    padding: 50px 150px;
+    padding: 50px 10%;
 }
 
 
@@ -9,7 +9,7 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    gap: 200px;
+   
     padding:30px 50px;
     
 }

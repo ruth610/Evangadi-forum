@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { use, useRef, useState } from "react";
 import Instance from "../../axiosConfig";
 import { Link, useNavigate } from "react-router-dom";
 import Layout from "../Layout/Layout";
@@ -44,15 +44,15 @@ function Register({ isLogin, setIsLogin }) {
     try {
       const response = await Instance.post("/user/register", {
         username: userNameValue,
-        firstname: firstNameValue,
-        lastname: lastNameValue,
+        first_name: firstNameValue,
+        last_name: lastNameValue,
         email: emailValue,
         password: passwordValue,
       });
-
-      console.log(response.data);
       alert("user registered successfully :--please login to continue");
-      navigate("/home");
+      // navigate("/home");
+      console.log("done");
+      setIsLogin(true);
     } catch (error) {
       console.log(error.response.data.msg);
     }
@@ -95,35 +95,35 @@ function Register({ isLogin, setIsLogin }) {
               {showPass ? <FaRegEyeSlash /> : <GoEye color="ff8000" />}
             </span>
           </div>
-        </form>
-        <div style={{ marginTop: "10px" }}>
-          <p className={` ${styles.center}`}>
-            <span>
-              I agree to the{" "}
-              <Link className={styles.sign_in} to={"/about"}>
-                Privacy Policy
-              </Link>{" "}
-              and
-              <Link className={styles.sign_in} to={"/about"}>
-                &nbsp; terms of service
+          <div className={styles.bottom_form}>
+            <div style={{ marginTop: "10px" }}>
+              <p className={` ${styles.center}`}>
+                <span>
+                  I agree to the{" "}
+                  <Link className={styles.sign_in} to={"/about"}>
+                    Privacy Policy
+                  </Link>{" "}
+                  and
+                  <Link className={styles.sign_in} to={"/about"}>
+                    &nbsp; terms of service
+                  </Link>
+                  <Link className={styles.sign_in} to={"/about"}>
+                    &nbsp; terms of service
+                  </Link>{" "}
+                </span>
+              </p>
+              <button
+                className={`${styles.login} ${styles.register_btn}`}
+                type="submit"
+              >
+                Agree and Join
+              </button>{" "}
+              <Link className={`${styles.sign_in} ${styles.center}`}>
+                Already have an account?
               </Link>
-              <Link className={styles.sign_in} to={"/about"}>
-                &nbsp; terms of service
-              </Link>{" "}
-            </span>
-          </p>
-          <Link to={"/login"}>
-            <button
-              className={`${styles.login} ${styles.register_btn}`}
-              type="submit"
-            >
-              Agree and Join
-            </button>{" "}
-          </Link>
-          <Link className={`${styles.sign_in} ${styles.center}`} >
-            Already have an account?
-          </Link>
-        </div>
+            </div>
+          </div>
+        </form>
       </section>
     </section>
   );

@@ -28,16 +28,19 @@ function Login({ isLogin, setIsLogin }) {
       alert("please provide all required information");
       return;
     }
+
     try {
-      const { data } = await Instance.post("/user/login", {
+      const  {data}  = await Instance.post("/user/login", {
         email: emailValue,
         password: passwordValue,
       });
+
+      console.log(data);
       localStorage.setItem("token", data.token);
       alert("login successfull");
       navigate("/home");
     } catch (error) {
-      alert(error?.response?.data?.message);
+      alert(error);
     }
   }
 
