@@ -4,6 +4,8 @@ import Instance from "./axiosConfig";
 import { useNavigate } from "react-router-dom";
 import Register from "./pages/../components/Auth/Register";
 import Landing from "./pages/Landing/Landing";
+import AskQuestion from "./pages/AskQuestion/AskQuestion";
+import Login from "./components/Auth/Login";
 import HomePage from "./pages/HomePage/HomePage";
 
 export const AppState = createContext();

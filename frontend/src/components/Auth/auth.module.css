@@ -5,6 +5,8 @@
   height: 500px;
    background-color: white;
    max-width: 600px;
+   z-index: 50;
+   position: relative;
 }
 
 /* ----------- Form Styles ----------- */

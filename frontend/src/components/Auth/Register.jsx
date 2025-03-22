@@ -120,7 +120,7 @@ function Register({ isLogin, setIsLogin }) {
               Agree and Join
             </button>{" "}
           </Link>
-          <Link className={`${styles.sign_in} ${styles.center}`} to={"/login"}>
+          <Link className={`${styles.sign_in} ${styles.center}`} >
             Already have an account?
           </Link>
         </div>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useState, useEffect,useContext } from "react";
 import { Link } from "react-router-dom";
 import { IoCard, IoPersonCircleOutline } from "react-icons/io5";
@@ -85,3 +86,15 @@ const HomePage = () => {
 };
 
 export default HomePage;
+=======
+import React from 'react'
+
+function HomePage() {
+  return (
+    <div>HomePage</div>
+    
+  )
+}
+
+export default HomePage
+>>>>>>> main
