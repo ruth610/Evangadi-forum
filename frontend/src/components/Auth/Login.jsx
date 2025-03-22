@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useRef } from "react";
 import Instance from "../../axiosConfig";
 import { Link, useNavigate } from "react-router-dom";
-import styles from './auth.module.css'
+import styles from "./auth.module.css";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { GoEye } from "react-icons/go";
 
@@ -35,7 +35,7 @@ function Login({ isLogin, setIsLogin }) {
       });
       localStorage.setItem("token", data.token);
       alert("login successfull");
-      navigate("/AskQuestion");
+      navigate("/home");
     } catch (error) {
       alert(error?.response?.data?.message);
     }

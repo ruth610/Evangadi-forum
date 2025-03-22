@@ -52,7 +52,7 @@ function Register({ isLogin, setIsLogin }) {
 
       console.log(response.data);
       alert("user registered successfully :--please login to continue");
-      navigate("/AskQuestion");
+      navigate("/home");
     } catch (error) {
       console.log(error.response.data.msg);
     }
@@ -120,7 +120,7 @@ function Register({ isLogin, setIsLogin }) {
               Agree and Join
             </button>{" "}
           </Link>
-          <Link className={`${styles.sign_in} ${styles.center}`} to={"/login"}>
+          <Link className={`${styles.sign_in} ${styles.center}`} >
             Already have an account?
           </Link>
         </div>
