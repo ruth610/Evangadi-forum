@@ -4,7 +4,10 @@ import Register from "../../components/Auth/Register";
 import styles from "./landing.module.css";
 import homeBg from "./../../assets/home-backgraund.png";
 import Layout from "../../components/Layout/Layout";
-// import { useSpring, animated } from 'react-spring';
+import About from "./../../components/About/About";
+
+
+
 function Landing() {
   const [isLogin, setIsLogin] = useState(true);
   return (
@@ -23,7 +26,7 @@ function Landing() {
           )}
         </div>
         <div className={styles.landing_about_container}>
-          {/* <About /> */}
+          <About />
         </div>
       </section>
     </Layout>

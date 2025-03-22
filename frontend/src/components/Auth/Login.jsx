@@ -35,7 +35,8 @@ function Login({ isLogin, setIsLogin }) {
       });
       localStorage.setItem("token", data.token);
       alert("login successfull");
-      navigate("/");
+      console.log(data);
+      navigate("/Home");
     } catch (error) {
       alert(error?.response?.data?.message);
     }
