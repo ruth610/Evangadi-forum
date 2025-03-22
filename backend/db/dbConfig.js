@@ -1,11 +1,12 @@
 const mysql2 = require("mysql2");
 
 const dbconnection = mysql2.createPool({
-  user: "group-1-forum",
-  host: "localhost",
-  password: "123456",
-  database: "group-1-forum",
-  connectionLimit: 10,
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  connectionLimit:  10,
+   port: process.env.DB_PORT
 });
 
 module.exports = dbconnection.promise();

@@ -21,7 +21,7 @@ function App() {
       setUser(data);
       navigate('/home')
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       navigate("/");
     }
   }

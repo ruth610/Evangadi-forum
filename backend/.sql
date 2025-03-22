@@ -11,8 +11,8 @@ CREATE TABLE questionTabel(
     id INT(20) NOT NULL AUTO_INCREMENT,
     questionid VARCHAR(100) NOT NULL UNIQUE,
     userid INT(20) NOT NULL,
-    title VARCHAR(20) NOT NULL,
-    description VARCHAR(200) NOT NULL,
+    title VARCHAR(150) NOT NULL,
+    description VARCHAR(300) NOT NULL,
     tag VARCHAR(20),
     PRIMARY KEY(id, questionid),
     FOREIGN key(userid) REFERENCES userTable(userid)

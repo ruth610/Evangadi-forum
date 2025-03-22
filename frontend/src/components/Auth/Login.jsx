@@ -30,7 +30,7 @@ function Login({ isLogin, setIsLogin }) {
     }
 
     try {
-      const  {data}  = await Instance.post("/user/login", {
+      const { data } = await Instance.post("/user/login", {
         email: emailValue,
         password: passwordValue,
       });

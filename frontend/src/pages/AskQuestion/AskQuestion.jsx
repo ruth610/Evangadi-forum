@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import classes from "./askQuestion.module.css";
 import AI from "@mui/icons-material/ArrowCircleRight";
 import { useNavigate } from "react-router-dom";
-import axios from "../../axiosConfig";
+import axiosConfig from "../../axiosConfig";
 import Layout from "../../components/Layout/Layout";
 
 function AskQuestion() {
@@ -15,14 +15,18 @@ function AskQuestion() {
     e.preventDefault();
     const titleValue = title.current.value;
     const descValue = description.current.value;
+    
     try {
-      await axios.post("/question",
+      await axiosConfig.post(
+        "/question",
         {
           title: titleValue,
           description: descValue,
         },
         {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
       );
 
