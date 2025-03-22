@@ -52,7 +52,7 @@ function Register({ isLogin, setIsLogin }) {
 
       console.log(response.data);
       alert("user registered successfully :--please login to continue");
-      navigate("/login");
+      navigate("/home");
     } catch (error) {
       console.log(error.response.data.msg);
     }
