@@ -41,7 +41,7 @@ const HomePage = () => {
           </Link>
 
           <div>
-            <p>Welcome: {user.username}</p>
+            <p>Welcome: {user?.username}</p>
           </div>
         </div>
 

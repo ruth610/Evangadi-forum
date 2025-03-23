@@ -25,8 +25,6 @@ app.use(express.json());
 app.use("/api/user", userRoute);
 app.use("/api/question", authMiddleware, questionRoute);
 app.use("/api/answer", authMiddleware, answerRoute);
-
-
 // database connection and server listening
 async function start() {
   try {

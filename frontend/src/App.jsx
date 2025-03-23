@@ -19,9 +19,10 @@ function App() {
         },
       });
       setUser(data);
-      navigate('/home')
+      navigate("/home");
     } catch (error) {
-      // console.log(error);
+      setUser(null);
+      localStorage.removeItem("token");
       navigate("/");
     }
   }
@@ -30,11 +31,11 @@ function App() {
   }, []);
   return (
     <AppState.Provider value={{ user, setUser }}>
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/Ask" element={<AskQuestion />} />
-        </Routes>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/Ask" element={<AskQuestion />} />
+      </Routes>
     </AppState.Provider>
   );
 }

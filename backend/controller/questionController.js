@@ -17,7 +17,18 @@ async function postQuestion(req, res) {
     const { userid } = req.user;
     // generating a key for the every question that is being posted by the users
     const questionid = uuidv4();
+    ///////
+    const [existingQuestion] = await dbConnection.query(
+      "SELECT * FROM questionTabel WHERE title = ? AND description = ?",
+      [title, description]
+    );
+    if (existingQuestion.length > 0) {
+      return res
+        .status(400)
+        .json({ message: "You have already submitted this question." });
+    }
     //here first we have to insert our data into the question table
+
     await dbConnection.query(
       `INSERT INTO questionTabel(userid,questionid,description,title,tag) VALUES(?,?,?,?,?)`,
       [userid, questionid, description, title, tagToInsert]
