@@ -33,10 +33,10 @@ async function postAnswer(req, res) {
       [userid, questionid, answer]
     );
 
-    res.status(201).json({ message: "Answer posted successfully" });
+    return res.status(201).json({ message: "Answer posted successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({
+    return res.status(500).json({
       error: "Internal Server Error",
       message: "An unexpected error occurred.",
     });
@@ -66,7 +66,7 @@ ORDER BY answerid;
       });
     }
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       error: "Not Found",
       message: "The requested question could not be found.",
     });

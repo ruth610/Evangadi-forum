@@ -16,7 +16,7 @@ const QuestionCard = ({ question }) => {
           </div>
 
           <Link
-            to={`/QuestionDetail/${question.id}`}
+            to={`/questions/${question.questionid}`}
             className={style.question_title}
           >
             {question.title}
@@ -24,7 +24,7 @@ const QuestionCard = ({ question }) => {
         </div>
         <div>
           <Link
-            to={`/QuestionDetail/${question.id}`}
+            to={`/questions/${question.questionid}`}
             className={style.expand_icon}
           >
             <FaGreaterThan />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaFacebook } from "react-icons/fa6";
+import { FaFacebook } from 'react-icons/fa';
 import {IoLogoInstagram} from 'react-icons/io5';
 import {BsYoutube} from "react-icons/bs";
 import styles from "./footer.module.css";

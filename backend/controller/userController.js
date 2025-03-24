@@ -41,10 +41,10 @@ async function register(req, res) {
       "insert into userTable(username,firstname,lastname,email,password) values(?,?,?,?,?)",
       [username, first_name, last_name, email, hashedPassword]
     );
-    res.status(StatusCodes.OK).json({ msg: "user registered successfully" });
+    return res.status(StatusCodes.OK).json({ msg: "user registered successfully" });
   } catch (error) {
     console.log(error.message);
-    res
+    return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ msg: "internal server error" });
   }
@@ -66,7 +66,7 @@ async function login(req,res){
         }
         const isMatched = await bcrypt.compare(password,user[0].password);
         if(!isMatched){
-            res
+            return res
               .status(StatusCodes.BAD_REQUEST)
               .json({ msg: "Invalid Password Try again!!" });
         }
@@ -78,13 +78,13 @@ async function login(req,res){
           .json({ msg: "user logged in successfully", token });
     } catch (error) {
         console.log(error.message);
-        res.json({msg: "something went wrong try again later!!"});
+        return res.json({msg: "something went wrong try again later!!"});
     }
 }
 
 async function checkUser(req, res) {
   const { username, userid } = req.user;
-  res.status(StatusCodes.OK).json({ message: "Valid user", username, userid });
+  return res.status(StatusCodes.OK).json({ message: "Valid user", username, userid });
 }
 
 

@@ -2,13 +2,14 @@
   margin: 15px 0;
   padding: 15px;
   background-color: white;
-  border-bottom: 2px solid rgb(204, 204, 204);
+  border-bottom: 3px solid transparent; 
 }
+
 .question_container:hover {
-  margin: 15px 0;
   background-color: rgb(245, 244, 244);
   border-bottom: 3px solid #fd7e14;
   transition: all 0.1s ease-in-out;
+  cursor: pointer;
 }
 .question_container:hover svg{
   color: black;

@@ -13,8 +13,8 @@ function Header() {
         <ul>
           <Link to={'/home'} >Home</Link>
           <li>How it Works</li>
-          <li>
-            <button>SIGN IN</button>
+          <li className={styles.btn}>
+            SIGN IN
           </li>
         </ul>
       </div>

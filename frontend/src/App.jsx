@@ -28,7 +28,7 @@ function App() {
   }
   useEffect(() => {
     checkuser();
-  }, []);
+  }, [token]);
   return (
     <AppState.Provider value={{ user, setUser }}>
       <Routes>

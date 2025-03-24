@@ -40,7 +40,7 @@ const HomePage = () => {
             <button className={style.askButton}>Ask Question</button>
           </Link>
 
-          <div>
+          <div className={style.welcome}>
             <p>Welcome: {user?.username}</p>
           </div>
         </div>
