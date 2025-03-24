@@ -26,3 +26,84 @@
     padding: 30px 15px;
   }
 }
+.formWrapper {
+  width: 100%;
+  position: relative;
+  opacity: 1; /* Ensure it is visible */
+  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+/* Slide Animations */
+.slideInLeft {
+  animation: slideInLeft 0.2s forwards;
+}
+.slideOutLeft {
+  animation: slideOutLeft 0.2s forwards;
+}
+.slideInRight {
+  animation: slideInRight 0.2s forwards;
+}
+.slideOutRight {
+  animation: slideOutRight 0.2s forwards;
+}
+
+/* ---------------- */
+.formWrapper {
+  width: 100%;
+  position: relative;
+  opacity: 1; /* Ensure it is visible */
+  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+/* Slide Animations */
+.slideInLeft {
+  animation: slideInLeft 0.2s forwards;
+}
+.slideOutLeft {
+  animation: slideOutLeft 0.2s forwards;
+}
+.slideInRight {
+  animation: slideInRight 0.2s forwards;
+}
+.slideOutRight {
+  animation: slideOutRight 0.2s forwards;
+}
+/* Keyframes */
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slideOutLeft {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}

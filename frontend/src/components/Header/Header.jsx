@@ -2,7 +2,16 @@ import React from "react";
 import styles from "./header.module.css";
 import Logo from "../../assets/HeaderLogo.png";
 import {Link} from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
+
+
 function Header() {
+  const navigate = useNavigate();
+  
+  const logout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
   return (
     <header className={styles.header}>
       <Link href="#">
@@ -11,10 +20,10 @@ function Header() {
 
       <div className={styles.navbar}>
         <ul>
-          <Link to={'/home'} >Home</Link>
+          <Link to={"/home"}>Home</Link>
           <li>How it Works</li>
           <li>
-            <button>SIGN IN</button>
+            <button onClick={logout} >Log Out</button>
           </li>
         </ul>
       </div>
