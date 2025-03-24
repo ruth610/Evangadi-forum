@@ -1,5 +1,5 @@
 import { useEffect, useState, createContext } from "react";
-import { Route, Routes } from "react-router-dom";
+import { data, Route, Routes } from "react-router-dom";
 import Instance from "./axiosConfig";
 import { useNavigate } from "react-router-dom";
 import Landing from "./pages/Landing/Landing";
@@ -21,6 +21,7 @@ function App() {
       setUser(data);
       navigate("/home");
     } catch (error) {
+      console.log(error);
       setUser(null);
       localStorage.removeItem("token");
       navigate("/");

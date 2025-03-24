@@ -5,7 +5,7 @@ import Layout from "../Layout/Layout";
 import styles from "./auth.module.css";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { GoEye } from "react-icons/go";
-function Register({ isLogin, setIsLogin }) {
+function Register({ setShowLogin }) {
   const userNameDom = useRef(null);
   const firstNameDom = useRef(null);
   const lastNameDom = useRef(null);
@@ -66,12 +66,7 @@ function Register({ isLogin, setIsLogin }) {
         <h2>Join the network</h2>
         <p className={styles.create_account}>
           Already have an account?
-          <span
-            className={styles.sign_in}
-            onClick={() => {
-              setIsLogin(!isLogin);
-            }}
-          >
+          <span className={styles.sign_in} onClick={() => setShowLogin(true)}>
             {" "}
             Sign in
           </span>
