@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "../../axiosConfig";
-import styles from "./AnswerPage.module.css";
+import styles from "./questionDetail.module.css";
 
 function AnswerPage() {
   const { questionid } = useParams();
@@ -9,6 +9,7 @@ function AnswerPage() {
   const [answers, setAnswers] = useState([]);
   const [newAnswer, setNewAnswer] = useState("");
   const [error, setError] = useState("");
+console.log(questionid);
 
   useEffect(() => {
     fetchQuestionAndAnswers();
@@ -16,14 +17,15 @@ function AnswerPage() {
 
   const fetchQuestionAndAnswers = async () => {
     try {
-      const questionResponse = await axios.get(⁠`/questions/${questionid}`⁠, {
-        headers: { Authorization: ⁠`Bearer ${localStorage.getItem("token")}`⁠ },
+      const questionResponse = await axios.get(`/question/${questionid}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
+
       console.log(questionResponse.data.question);
       setQuestion(questionResponse.data.question);
 
-      const answersResponse = await axios.get(⁠`/answers/${questionid}`, {
-        headers: { Authorization: ⁠`Bearer${localStorage.getItem("token")}`},
+      const answersResponse = await axios.get(`/answer/${questionid}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
 
       const answersWithVotes = answersResponse.data.answers.map((answer) => ({
@@ -52,7 +54,7 @@ function AnswerPage() {
         "/answers",
         { questionid, answer: newAnswer },
         {
-          headers: { Authorization: `⁠Bearer ${localStorage.getItem("token")}`⁠ },
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
       );
       setNewAnswer("");
@@ -76,7 +78,7 @@ function AnswerPage() {
   };
 
   if (error && error !== "Please fill in the answer field.") {
-    return <div className={⁠`${styles.error} ${styles.fadeIn}`⁠}>{error}</div>
+    return <div className={`${styles.error} ${styles.fadeIn}`}>{error}</div>;
   }
 
   if (!question) {
@@ -84,58 +86,59 @@ function AnswerPage() {
   }
 
   return (
-<>
+    <>
+    {console.log(question)
+    }
+      <div className={styles.answerPageContainer}>
+        <div className={styles.questionSection}>
+          <h2>{question.title}</h2>
+          <p>{question.description}</p>
+          <p>Asked by: {question.username}</p>
+        </div>
 
-<div className={styles.answerPageContainer}>
-      <div className={styles.questionSection}>
-        <h2>{question.title}</h2>
-        <p>{question.description}</p>
-        <p>Asked by: {question.username}</p>
-      </div>
-
-      <div className={styles.answersSection}>
-        <h3>Answers</h3>
-        {answers.map((answer, index) => (
-          <div
-            key={answer.answerid}
-            className={⁠`${styles.answer} ${styles.fadeIn}`⁠}
-          >
-            <p className={styles.answerText}>{answer.answer}</p>
-            <p className={styles.answerAuthor}>By: {answer.username}</p>
-            <div className={styles.voteButtons}>
-              <button
-                className={styles.upvoteButton}
-                onClick={() => handleUpvote(index)}
-              >
-                👍 {answer.votes}
-              </button>
-              <button
-                className={styles.dislikeButton}
-                onClick={() => handleDislike(index)}
-              >
-                👎 {answer.dislikes}
-              </button>
+        <div className={styles.answersSection}>
+          <h3>Answers</h3>
+          {answers.map((answer, index) => (
+            <div
+              key={answer.answerid}
+              className={`${styles.answer} ${styles.fadeIn}`}
+            >
+              <p className={styles.answerText}>{answer.answer}</p>
+              <p className={styles.answerAuthor}>By: {answer.username}</p>
+              <div className={styles.voteButtons}>
+                <button
+                  className={styles.upvoteButton}
+                  onClick={() => handleUpvote(index)}
+                >
+                  👍 {answer.votes}
+                </button>
+                <button
+                  className={styles.dislikeButton}
+                  onClick={() => handleDislike(index)}
+                >
+                  👎 {answer.dislikes}
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
-      <form onSubmit={handleSubmitAnswer} className={styles.answerForm}>
-        <textarea
-          value={newAnswer}
-          onChange={(e) => setNewAnswer(e.target.value)}
-          placeholder="Your answer..."
-          className={styles.answerInput}
-        />
-        {error === "Please fill in the answer field." && (
-          <div className={styles.formError}>{error}</div>
-        )}
-        <button type="submit" className={styles.answerButton}>
-          Post Answer
-        </button>
-      </form>
-    </div>
-</>
+        <form onSubmit={handleSubmitAnswer} className={styles.answerForm}>
+          <textarea
+            value={newAnswer}
+            onChange={(e) => setNewAnswer(e.target.value)}
+            placeholder="Your answer..."
+            className={styles.answerInput}
+          />
+          {error === "Please fill in the answer field." && (
+            <div className={styles.formError}>{error}</div>
+          )}
+          <button type="submit" className={styles.answerButton}>
+            Post Answer
+          </button>
+        </form>
+      </div>
+    </>
   );
 }
 

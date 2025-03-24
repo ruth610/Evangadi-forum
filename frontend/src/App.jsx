@@ -37,7 +37,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/Ask" element={<AskQuestion />} />
-        <Route path="/questions/:questionId" element={<QuestionDetail />} />
+        <Route path="/questions/:questionid" element={<QuestionDetail />} />
       </Routes>
     </AppState.Provider>
   );

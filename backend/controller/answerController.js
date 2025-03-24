@@ -29,7 +29,7 @@ async function postAnswer(req, res) {
 
     // Insert answer into the database
     await dbconnection.query(
-      "INSERT INTO answertable(userid, questionid, answer	) VALUES (?, ?, ?)",
+      "INSERT INTO answerTable(userid, questionid, answer	) VALUES (?, ?, ?)",
       [userid, questionid, answer]
     );
 
