@@ -7,7 +7,15 @@ import Layout from "../../components/Layout/Layout";
 import About from "./../../components/About/About";
 // import { useSpring, animated } from 'react-spring';
 function Landing() {
-  const [isLogin, setIsLogin] = useState(true);
+  const [showLogin, setShowLogin] = useState(true);
+  const [slideDirection, setSlideDirection] = useState("");
+   const handleSwitch = () => {
+     setSlideDirection(showLogin ? styles.slideOutLeft : styles.slideOutRight);
+     setTimeout(() => {
+       setShowLogin((prev) => !prev);
+       setSlideDirection(showLogin ? styles.slideInRight : styles.slideInLeft);
+     }, 30);
+   };
   return (
     <Layout>
       <section
@@ -16,11 +24,11 @@ function Landing() {
           backgroundImage: `url(${homeBg})`,
         }}
       >
-        <div>
-          {isLogin ? (
-            <Login isLogin={isLogin} setIsLogin={setIsLogin} />
+        <div className={`${styles.formWrapper} ${slideDirection}`}>
+          {showLogin ? (
+            <Login setShowLogin={handleSwitch} />
           ) : (
-            <Register isLogin={isLogin} setIsLogin={setIsLogin} />
+            <Register setShowLogin={handleSwitch} />
           )}
         </div>
         <div className={styles.landing_about_container}>

@@ -6,7 +6,7 @@ import styles from "./auth.module.css";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { GoEye } from "react-icons/go";
 
-function Login({ isLogin, setIsLogin }) {
+function Login({ setShowLogin }) {
   const emailDom = useRef(null);
   const passwordDom = useRef(null);
   const [showPass, setShowPass] = useState(true);
@@ -50,9 +50,7 @@ function Login({ isLogin, setIsLogin }) {
         <h2>Join the network</h2>
         <p
           className={styles.create_account}
-          onClick={() => {
-            setIsLogin(!isLogin);
-          }}
+          onClick={() => setShowLogin(false)}
         >
           Don't have an account?
           <span className={styles.sign_in}> Create a new account</span>
