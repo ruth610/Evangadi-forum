@@ -22,8 +22,8 @@ function Header() {
         <ul>
           <Link to={"/home"}>Home</Link>
           <li>How it Works</li>
-          <li className={styles.btn}>
-            <button onClick={logout} >Log Out</button>
+          <li className={styles.btn} onClick={logout}>
+          Log Out
           </li>
         </ul>
       </div>

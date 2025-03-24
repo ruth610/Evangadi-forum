@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Landing from "./pages/Landing/Landing";
 import HomePage from "./pages/HomePage/HomePage";
 import AskQuestion from "./pages/AskQuestion/AskQuestion";
+import QuestionDetail from "./pages/QuestionDetail/QuestionDetail";
 export const AppState = createContext();
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/Ask" element={<AskQuestion />} />
+        <Route path="/questions/:questionId" element={<QuestionDetail />} />
       </Routes>
     </AppState.Provider>
   );
