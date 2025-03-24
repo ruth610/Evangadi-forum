@@ -1,104 +1,142 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
-import styles from "./questionDetail.module.css"; // Import the CSS module
-import Layout from "../../components/Layout/Layout";
+import axios from "../../axiosConfig";
+import styles from "./AnswerPage.module.css";
 
-const QuestionDetail = () => {
-  const { questionId } = useParams();
+function AnswerPage() {
+  const { questionid } = useParams();
   const [question, setQuestion] = useState(null);
   const [answers, setAnswers] = useState([]);
   const [newAnswer, setNewAnswer] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    setLoading(true);
-    setError(null);
-
-    const fetchQuestionAndAnswers = async () => {
-      try {
-        const questionRes = await axios.get(`/api/questions/${questionId}`);
-        setQuestion(questionRes.data);
-
-        const answersRes = await axios.get(
-          `/api/questions/${questionId}/answers`
-        );
-        setAnswers(Array.isArray(answersRes.data) ? answersRes.data : []);
-      } catch (err) {
-        console.error("Error fetching data:", err);
-        setError("Failed to load data. Please try again later.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchQuestionAndAnswers();
-  }, [questionId]);
+  }, [questionid]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!newAnswer.trim()) return;
-
+  const fetchQuestionAndAnswers = async () => {
     try {
-      const res = await axios.post(`/api/answers/${questionId}`, {
-        content: newAnswer,
+      const questionResponse = await axios.get(⁠`/questions/${questionid}`⁠, {
+        headers: { Authorization: ⁠`Bearer ${localStorage.getItem("token")}`⁠ },
       });
-      setAnswers([...answers, res.data]);
-      setNewAnswer("");
+      console.log(questionResponse.data.question);
+      setQuestion(questionResponse.data.question);
+
+      const answersResponse = await axios.get(⁠`/answers/${questionid}`, {
+        headers: { Authorization: ⁠`Bearer${localStorage.getItem("token")}`},
+      });
+
+      const answersWithVotes = answersResponse.data.answers.map((answer) => ({
+        ...answer,
+        votes: answer.votes || 0, // Initialize vote count to 0 if undefined
+        dislikes: answer.dislikes || 0, // Initialize dislike count to 0 if undefined
+      }));
+
+      setAnswers(answersWithVotes);
     } catch (err) {
-      console.error("Error posting answer:", err);
-      setError("Failed to submit your answer. Please try again.");
+      setError(
+        err.response?.data?.message || "Failed to load question and answers."
+      );
     }
   };
 
+  const handleSubmitAnswer = async (e) => {
+    e.preventDefault();
+    if (newAnswer.trim() === "") {
+      setError("Please fill in the answer field.");
+      return;
+    }
+
+    try {
+      await axios.post(
+        "/answers",
+        { questionid, answer: newAnswer },
+        {
+          headers: { Authorization: `⁠Bearer ${localStorage.getItem("token")}`⁠ },
+        }
+      );
+      setNewAnswer("");
+      setError("");
+      fetchQuestionAndAnswers(); // Refresh answers
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to submit answer.");
+    }
+  };
+
+  const handleUpvote = (index) => {
+    const updatedAnswers = [...answers];
+    updatedAnswers[index].votes += 1;
+    setAnswers(updatedAnswers);
+  };
+
+  const handleDislike = (index) => {
+    const updatedAnswers = [...answers];
+    updatedAnswers[index].dislikes += 1;
+    setAnswers(updatedAnswers);
+  };
+
+  if (error && error !== "Please fill in the answer field.") {
+    return <div className={⁠`${styles.error} ${styles.fadeIn}`⁠}>{error}</div>
+  }
+
+  if (!question) {
+    return <div className={styles.loading}>Loading...</div>;
+  }
+
   return (
-    <Layout>
-      <div className={styles.container}>
-        {loading && <p className="text-gray-500">Loading...</p>}
-        {error && <p className="text-red-500">{error}</p>}
+<>
 
-        {question && (
-          <div className={styles.questionCard}>
-            <h2>{question.title}</h2>
-            <p>{question.description}</p>
-          </div>
-        )}
-
-        <h3 className="mt-6 text-lg font-semibold">
-          Answers from the Community
-        </h3>
-        <div className="mt-2">
-          {answers.length > 0 ? (
-            answers.map((ans) => (
-              <div key={ans.id} className={styles.answerBox}>
-                <p>
-                  <strong>{ans.username}:</strong> {ans.content}
-                </p>
-              </div>
-            ))
-          ) : (
-            <p className="text-gray-500">
-              No answers yet. Be the first to answer!
-            </p>
-          )}
-        </div>
-
-        <form onSubmit={handleSubmit} className="mt-6">
-          <textarea
-            value={newAnswer}
-            onChange={(e) => setNewAnswer(e.target.value)}
-            className={styles.textarea}
-            placeholder="Your answer..."
-            required
-          ></textarea>
-          <button type="submit" className={styles.submitButton}>
-            Post Answer
-          </button>
-        </form>
+<div className={styles.answerPageContainer}>
+      <div className={styles.questionSection}>
+        <h2>{question.title}</h2>
+        <p>{question.description}</p>
+        <p>Asked by: {question.username}</p>
       </div>
-    </Layout>
-  );
-};
 
-export default QuestionDetail;
+      <div className={styles.answersSection}>
+        <h3>Answers</h3>
+        {answers.map((answer, index) => (
+          <div
+            key={answer.answerid}
+            className={⁠`${styles.answer} ${styles.fadeIn}`⁠}
+          >
+            <p className={styles.answerText}>{answer.answer}</p>
+            <p className={styles.answerAuthor}>By: {answer.username}</p>
+            <div className={styles.voteButtons}>
+              <button
+                className={styles.upvoteButton}
+                onClick={() => handleUpvote(index)}
+              >
+                👍 {answer.votes}
+              </button>
+              <button
+                className={styles.dislikeButton}
+                onClick={() => handleDislike(index)}
+              >
+                👎 {answer.dislikes}
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <form onSubmit={handleSubmitAnswer} className={styles.answerForm}>
+        <textarea
+          value={newAnswer}
+          onChange={(e) => setNewAnswer(e.target.value)}
+          placeholder="Your answer..."
+          className={styles.answerInput}
+        />
+        {error === "Please fill in the answer field." && (
+          <div className={styles.formError}>{error}</div>
+        )}
+        <button type="submit" className={styles.answerButton}>
+          Post Answer
+        </button>
+      </form>
+    </div>
+</>
+  );
+}
+
+export default AnswerPage;
