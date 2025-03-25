@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "../../axiosConfig";
-import styles from "./questionDetail.module.css";
-import Layout from './../../components/Layout/Layout'
+import styles from "./AnswerPage.module.css";
+import Layout from "../../components/Layout/Layout";
 function AnswerPage() {
   const { questionid } = useParams();
   const [question, setQuestion] = useState({});
