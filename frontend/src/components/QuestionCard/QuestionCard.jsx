@@ -11,7 +11,7 @@ const QuestionCard = ({ question }) => {
       <div className={style.question_line}>
         <div className={style.qn_title}>
           <div className={style.user}>
-            <IoPersonCircleOutline size={70}  />
+            <IoPersonCircleOutline size={"70px"} />
             <small>{question.username}</small>
           </div>
 

@@ -44,8 +44,8 @@ const HomePage = () => {
           <p>Questions</p>
           <hr />
         </div>
-        {questions.map((data, index) => (
-  <QuestionCard key={index} question={data} />
+        {questions.sort((a,b)=>(b.id-a.id)).slice(0,5).map((data) => (
+  <QuestionCard key={data.id} question={data} />
 )) }
       </section>
     </Layout>
