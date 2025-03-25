@@ -20,7 +20,6 @@ console.log(questionid);
       const questionResponse = await axios.get(`/question/${questionid}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
-
       console.log(questionResponse.data.question);
       setQuestion(questionResponse.data.question);
 
@@ -87,8 +86,6 @@ console.log(questionid);
 
   return (
     <>
-    {console.log(question)
-    }
       <div className={styles.answerPageContainer}>
         <div className={styles.questionSection}>
           <h2>{question.title}</h2>
