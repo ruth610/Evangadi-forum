@@ -5,12 +5,14 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./auth.module.css";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { GoEye } from "react-icons/go";
+import {ClipLoader} from 'react-spinners';
 
 function Login({ setShowLogin }) {
   const emailDom = useRef(null);
   const passwordDom = useRef(null);
   const [showPass, setShowPass] = useState(true);
   const [textpass, setTextPass] = useState("password");
+  const [loading ,setLoading] = useState(false);
   const navigate = useNavigate();
   function passToggler() {
     setShowPass(!showPass);
@@ -22,10 +24,12 @@ function Login({ setShowLogin }) {
   }
   async function handlesubmit(e) {
     e.preventDefault();
+    setLoading(true);
     const emailValue = emailDom.current.value;
     const passwordValue = passwordDom.current.value;
     if (!emailValue || !passwordValue) {
       alert("please provide all required information");
+      setLoading(false);
       return;
     }
 
@@ -35,12 +39,14 @@ function Login({ setShowLogin }) {
         password: passwordValue,
       });
 
-      console.log(data);
+      // console.log(data);
       localStorage.setItem("token", data.token);
       alert("login successfull");
       navigate("/home");
     } catch (error) {
       alert(error);
+    }finally{
+      setLoading(false)
     }
   }
 
@@ -67,8 +73,11 @@ function Login({ setShowLogin }) {
             </span>
           </div>
           <button type="submit" className={styles.login}>
-            {" "}
-            Login
+            {
+              loading ? <ClipLoader color="white" size={20} /> : "Login"
+              
+            }
+           
           </button>
         </form>
       </section>

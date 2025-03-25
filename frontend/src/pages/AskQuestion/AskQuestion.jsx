@@ -4,15 +4,18 @@ import AI from "@mui/icons-material/ArrowCircleRight";
 import { useNavigate } from "react-router-dom";
 import axiosConfig from "../../axiosConfig";
 import Layout from "../../components/Layout/Layout";
+import {ClipLoader} from 'react-spinners';
 
 function AskQuestion() {
   const [redirecting, setRedirecting] = useState("");
   const navigate = useNavigate();
   const title = useRef();
   const description = useRef();
+  const [loading , setLoading] = useState(false);
 
   async function handleAskQuestion(e) {
     e.preventDefault();
+    setLoading(true);
     const titleValue = title.current.value;
     const descValue = description.current.value;
     
@@ -31,10 +34,16 @@ function AskQuestion() {
       );
 
       setRedirecting("Question posted successfully");
+      // console.log(postquest);
       navigate("/home");
     } catch (error) {
-      console.log(error);
-      setRedirecting("Error posting question"); // Set error message
+      if (error.response) {
+        setRedirecting(error?.response?.data?.message || "Something went wrong!");
+      } else {
+        setRedirecting("Network error. Please try again.");
+      }
+    }finally{
+      setLoading(false);
     }
   }
 
@@ -70,7 +79,7 @@ function AskQuestion() {
         <div className={classes.post_question}>
           <form onSubmit={handleAskQuestion} method="post">
             <label htmlFor="">Post Your Question</label>
-            {redirecting && <p>{redirecting}</p>}
+            {redirecting && <p style={{color:'red'}}>{redirecting}</p>}
             <textarea ref={title} placeholder="Question Title..." cols="100" />
             <textarea
               ref={description}
@@ -78,7 +87,9 @@ function AskQuestion() {
               cols="100"
               rows="10"
             />
-            <button type="submit">Post Question</button>
+            <button type="submit" style={{ minWidth: "150px", height: "40px" }}>
+              {loading? <ClipLoader size={20} color="#FF8704"/>: 'Post Question'}
+            </button>
           </form>
         </div>
       </section>
