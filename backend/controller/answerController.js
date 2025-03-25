@@ -58,7 +58,7 @@ ORDER BY answerid;
     if (result.length === 0) {
       return res.status(StatusCodes.NOT_FOUND).json({
         error: "Not Found",
-        message: "The requested question could not be found.",
+        message: "The requested question doesn't have answer.",
       });
     } else {
       return res.status(StatusCodes.OK).json({
