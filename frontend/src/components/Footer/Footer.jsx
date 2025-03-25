@@ -25,12 +25,12 @@ function Footer() {
             <li><a href="#">How it works</a></li>
             <li><a href="#">Terms of Service</a></li>
             <li><a href="#">Privacy Policy</a></li>
-          </ul>
+          </ul>cd
         </div>
 
         <div className={styles.links}>
           <ul>
-            <li><h3>Contact Info</h3></li>
+            <li><h3>Contact info</h3></li>
             <li>Evangadi Networks</li>
             <li>support@evangadi.com</li>
             <li>+1-202-386-2702</li>
