@@ -1,36 +1,39 @@
-.homepage {
+.homepage{
   width: 100%;
   padding: 50px 10%;
 }
 
-.container {
+
+.container{
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-
-  padding: 30px 50px;
+ 
+  padding:30px 50px;
+  
 }
 
-.container button {
+.container button{
   padding: 10px 30px;
-  background-color: #007bff;
+  background-color:  #007bff;
   border: none;
   color: white;
   border-radius: 5px;
   text-align: center;
   cursor: pointer;
+  
 }
 
-.container p {
+.container p{
   padding-right: 10px;
 }
-.question_container {
+.question_container{
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.question_line {
+.question_line{
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -38,26 +41,32 @@
   padding: 10px;
   border-bottom: 1px solid #ddd;
   transition: background-color 0.3s ease;
+     
+  
 }
-.question_line:hover {
-  background-color: #f0f0f0;
+.question_line:hover{
+background-color:#f0f0f0;
+
 }
 
-.question_title {
+
+.question_title{
   font-size: 25px;
 }
-.question_title :hover {
-  animation: slideIcon 0.4s ease-in-out;
+.question_title  :hover {
+  animation: slideIcon 0.4s ease-in-out;  
 }
 
-.qn_title {
-  flex-grow: 1;
+.qn_title{
+  flex-grow:1;
   display: flex;
   align-items: center;
-
+  
   gap: 40px;
+  
+
 }
-.user {
+.user{
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -71,33 +80,26 @@
   transition: background-color 0.3s ease;
 }
 
-.question_line:hover .user svg {
+.question_line:hover .user svg  {
   background-color: #d1d1d1;
 }
 
-.expand_icon {
+.expand_icon{
   margin-left: auto;
   display: flex;
   font-size: 20px;
-  color: #555;
-  cursor: pointer;
-  transition: transform 0.3s ease-in-out;
+color: #555;
+cursor: pointer;
+transition: transform 0.3s ease-in-out;
+
 }
-.question_line:hover .expand_icon {
+.question_line:hover .expand_icon  {
   animation: slideIcon 0.4s ease-in-out;
 }
-
-
 @keyframes slideIcon {
-  0% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(-3px);
-  }
-  100% {
-    transform: translateX(0);
-  }
+  0% { transform: translateX(0); }
+  50% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
 }
 
 .welcome {
@@ -107,7 +109,7 @@
   border: 1px solid #fca966;
   padding: 10px 20px;
   margin: 15px 0;
-  border-radius: 8px;
+  border-radius: 8px; 
   font-size: 18px;
   font-weight: bold;
   text-align: center;
@@ -117,17 +119,5 @@
 .welcome p {
   margin: 0;
   color: rgb(92, 88, 88);
-}
 
-@media (max-width: 600px) {
-  .container {
-    padding: 20px 0px 30px 0px;
-  }
-  .welcome {
-    padding: 9px;
-    margin-top: 25px;
-  }
-  .homepage{
-    padding: 0px 5%;
-  }
 }
