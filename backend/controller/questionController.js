@@ -77,8 +77,9 @@ async function getallQuestion(req, res) {
 
 async function singleQuestion(req, res) {
     try {
-        const { question_id } = req.params;  
-
+        const { question_id } = req.params; 
+        console.log(req.params); 
+        console.log(question_id);
         const [rows] = await dbConnection.query(
           `SELECT questionid,title, description AS content,userid AS user_id FROM questionTabel WHERE questionid = ?`,
           [question_id]

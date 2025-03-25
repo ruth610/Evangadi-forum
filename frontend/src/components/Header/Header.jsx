@@ -10,7 +10,7 @@ function Header() {
   
   const logout = () => {
     localStorage.removeItem("token");
-    navigate("/login");
+    navigate("/");
   };
   return (
     <header className={styles.header}>
@@ -20,8 +20,11 @@ function Header() {
 
       <div className={styles.navbar}>
         <ul>
-          <Link to={"/home"}>Home</Link>
-          <li>How it Works</li>
+          <div className={styles.home}>
+            <Link to={"/home"}>Home</Link>
+            <li>How it Works</li>
+          </div>
+
           <li className={styles.btn} onClick={logout}>
           Log Out
           </li>

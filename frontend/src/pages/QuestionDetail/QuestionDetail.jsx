@@ -18,16 +18,16 @@ console.log(questionid);
   const fetchQuestionAndAnswers = async () => {
     try {
       const questionResponse = await axios.get(`/question/${questionid}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")} `},
       });
 
-      console.log(questionResponse.data.question);
+      // console.log(questionResponse.data.question);
       setQuestion(questionResponse.data.question);
 
       const answersResponse = await axios.get(`/answer/${questionid}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")} `},
       });
-
+      console.log(answersResponse);
       const answersWithVotes = answersResponse.data.answers.map((answer) => ({
         ...answer,
         votes: answer.votes || 0, // Initialize vote count to 0 if undefined
@@ -51,10 +51,10 @@ console.log(questionid);
 
     try {
       await axios.post(
-        "/answers",
+        "/answer",
         { questionid, answer: newAnswer },
         {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")} `},
         }
       );
       setNewAnswer("");
@@ -142,4 +142,4 @@ console.log(questionid);
   );
 }
 
-export default AnswerPage;
+export default AnswerPage;  
