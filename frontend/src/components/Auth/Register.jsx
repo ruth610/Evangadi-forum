@@ -14,6 +14,7 @@ function Register({ setShowLogin }) {
   const navigate = useNavigate();
   const [showPass, setShowPass] = useState(true);
   const [textpass, setTextPass] = useState("password");
+  const [errorMessage, setErrorMessage] = useState("");
 
   function passToggler() {
     setShowPass(!showPass);
@@ -25,6 +26,8 @@ function Register({ setShowLogin }) {
   }
   async function handlesubmit(e) {
     e.preventDefault();
+    
+    setErrorMessage("");
     const userNameValue = userNameDom.current.value;
     const firstNameValue = firstNameDom.current.value;
     const lastNameValue = lastNameDom.current.value;
@@ -38,9 +41,13 @@ function Register({ setShowLogin }) {
       !emailValue ||
       !passwordValue
     ) {
-      alert("please provide all required information");
+      setErrorMessage("please provide all required information");
       return;
     }
+     if (passwordValue.length < 8) {
+       setErrorMessage("Password must be at least 8 characters long.");
+       return;
+     }
     try {
       const response = await Instance.post("/user/register", {
         username: userNameValue,
@@ -49,12 +56,9 @@ function Register({ setShowLogin }) {
         email: emailValue,
         password: passwordValue,
       });
-      alert("user registered successfully :--please login to continue");
-      // navigate("/home");
-      console.log("done");
-      setIsLogin(true);
+      setShowLogin(true);
     } catch (error) {
-      console.log(error.response.data.msg);
+      setErrorMessage(error.response.data.msg);
     }
   }
 
@@ -71,6 +75,8 @@ function Register({ setShowLogin }) {
             Sign in
           </span>
         </p>
+        <span style={{ color: "red", fontSize: "18px", marginLeft: "10px" }}>
+          {errorMessage}  </span>
         <form action="" onSubmit={handlesubmit}>
           <div>
             <input ref={userNameDom} type="text" placeholder="username" />
@@ -91,7 +97,7 @@ function Register({ setShowLogin }) {
             </span>
           </div>
           <div className={styles.bottom_form}>
-            <div style={{ marginTop: "10px" }}>
+            <div  className={styles.register_bottom_center}>
               <p className={` ${styles.center}`}>
                 <span>
                   I agree to the{" "}

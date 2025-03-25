@@ -14,7 +14,7 @@ function Landing() {
      setTimeout(() => {
        setShowLogin((prev) => !prev);
        setSlideDirection(showLogin ? styles.slideInRight : styles.slideInLeft);
-     }, 30);
+     }, 20);
    };
   return (
     <Layout>

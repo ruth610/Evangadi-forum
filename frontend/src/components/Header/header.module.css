@@ -14,7 +14,6 @@
 
 .header img {
   width: auto;
-  height: 5vh;
 }
 .home{
   display: flex;
@@ -60,7 +59,7 @@
   background-color: #1141df;
   color: white;
   border: none;
-  padding: 14px 80px;
+  padding: 12px 59px;
   border-radius: 5px;
   cursor: pointer;
   font-weight: 100;
@@ -87,7 +86,8 @@
   
   .header img {
     width: auto;
-    height: 5vh;
+    height: 50%;
+    width: 80%;
   }
 
   .navbar .btn {
@@ -109,13 +109,21 @@
 }
 
 @media (max-width: 480px) {
-  .header img {
-    height: 4vh;
+  .header  {
+    padding: 10px;
+    margin-left: -20px;
+    justify-content: center;
+    /* height: 4vh; */
   }
+ .header img {
+    margin-left: -15px;
+  }
+ 
 
   .navbar .btn {
     padding: 10px 30px;
     display: block;
+    margin-left: -20px;
     
   }
 }

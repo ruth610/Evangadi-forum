@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 function Header() {
   const navigate = useNavigate();
-  
+  const isLandingPage = location.pathname === '/'
   const logout = () => {
     localStorage.removeItem("token");
     navigate("/");
@@ -26,7 +26,9 @@ function Header() {
           </div>
 
           <li className={styles.btn} onClick={logout}>
-          Log Out
+            {
+              isLandingPage ?('login'):('logout')
+            }
           </li>
         </ul>
       </div>

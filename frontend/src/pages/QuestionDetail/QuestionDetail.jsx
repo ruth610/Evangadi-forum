@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "../../axiosConfig";
 import styles from "./questionDetail.module.css";
-
+import Layout from './../../components/Layout/Layout'
 function AnswerPage() {
   const { questionid } = useParams();
   const [question, setQuestion] = useState({});
@@ -62,50 +62,52 @@ function AnswerPage() {
 
   return (
     <>
-      <div className={styles.answerPageContainer}>
-        <div className={styles.questionSection}>
-          <h2>{question?.title}</h2>
-          <p>{question?.content}</p>
+      <Layout>
+        <div className={styles.answerPageContainer}>
+          <div className={styles.questionSection}>
+            <h2>{question?.title}</h2>
+            <p>{question?.content}</p>
+          </div>
+
+          <div className={styles.answersSection}>
+            <h3>Answers</h3>
+
+            {answers.length > 0 ? (
+              answers.map((answer) => (
+                <div
+                  key={answer?.answerid}
+                  className={`${styles.answer} ${styles.fadeIn}`}
+                >
+                  <p className={styles.answerText}>{answer?.content}</p>
+                  <p className={styles.answerAuthor}>By: {answer?.user_name}</p>
+                </div>
+              ))
+            ) : (
+              <span>
+                <p style={{ color: "red" }}>{error}</p>
+                <p>No answers yet. Be the first to answer!</p>
+              </span>
+            )}
+          </div>
+
+          <form onSubmit={handleSubmitAnswer} className={styles.answerForm}>
+            <h3>Post Answer</h3>
+            {error === "Please fill in the answer field." && (
+              <div className={styles.formError}>{error}</div>
+            )}
+            <textarea
+              value={newAnswer}
+              onChange={(e) => setNewAnswer(e.target.value)}
+              placeholder="Your answer..."
+              className={styles.answerInput}
+            />
+
+            <button type="submit" className={styles.answerButton}>
+              Post Answer
+            </button>
+          </form>
         </div>
-
-        <div className={styles.answersSection}>
-          <h3>Answers</h3>
-
-          {answers.length > 0 ? (
-            answers.map((answer) => (
-              <div
-                key={answer?.answerid}
-                className={`${styles.answer} ${styles.fadeIn}`}
-              >
-                <p className={styles.answerText}>{answer?.content}</p>
-                <p className={styles.answerAuthor}>By: {answer?.user_name}</p>
-              </div>
-            ))
-          ) : (
-            <span>
-              <p style={{ color: "red" }}>{error}</p>
-              <p>No answers yet. Be the first to answer!</p>
-            </span>
-          )}
-        </div>
-
-        <form onSubmit={handleSubmitAnswer} className={styles.answerForm}>
-          <h3>Post Answer</h3>
-          {error === "Please fill in the answer field." && (
-            <div className={styles.formError}>{error}</div>
-          )}
-          <textarea
-            value={newAnswer}
-            onChange={(e) => setNewAnswer(e.target.value)}
-            placeholder="Your answer..."
-            className={styles.answerInput}
-          />
-
-          <button type="submit" className={styles.answerButton}>
-            Post Answer
-          </button>
-        </form>
-      </div>
+      </Layout>
     </>
   );
 }

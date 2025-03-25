@@ -13,6 +13,7 @@ function Login({ setShowLogin }) {
   const [showPass, setShowPass] = useState(true);
   const [textpass, setTextPass] = useState("password");
   const [loading ,setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   function passToggler() {
     setShowPass(!showPass);
@@ -38,18 +39,15 @@ function Login({ setShowLogin }) {
         email: emailValue,
         password: passwordValue,
       });
-
-      // console.log(data);
       localStorage.setItem("token", data.token);
-      alert("login successfull");
       navigate("/home");
     } catch (error) {
-      alert(error);
+      setError(error?.response?.data?.msg)
+      
     }finally{
       setLoading(false)
     }
   }
-
   return (
     <section className={styles.input_container}>
       <section className={styles.input_form}>
@@ -61,6 +59,7 @@ function Login({ setShowLogin }) {
           Don't have an account?
           <span className={styles.sign_in}> Create a new account</span>
         </p>
+        <span style={{color:'red',fontSize:'18px',marginLeft:'10px'}}>{error}</span>
         <form action="" onSubmit={handlesubmit}>
           <div className={styles.email_container}>
             <input type="email" placeholder="Email" ref={emailDom} />
