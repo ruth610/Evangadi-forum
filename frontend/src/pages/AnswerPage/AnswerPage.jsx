@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "../../axiosConfig";
 import styles from "./AnswerPage.module.css";
 import Layout from "../../components/Layout/Layout";
+import { IoPersonCircleOutline } from "react-icons/io5";
 function AnswerPage() {
   const { questionid } = useParams();
   const [question, setQuestion] = useState({});
@@ -65,21 +66,23 @@ function AnswerPage() {
       <Layout>
         <div className={styles.answerPageContainer}>
           <div className={styles.questionSection}>
-            <h2>{question?.title}</h2>
+            <h1>QUESTION</h1>
+            <h2 className={styles.question_title}>{question?.title}</h2>
             <p>{question?.content}</p>
           </div>
-
           <div className={styles.answersSection}>
-            <h3>Answers</h3>
-
+            <h3>Answer From The Community</h3>
+            <hr />
             {answers.length > 0 ? (
               answers.map((answer) => (
-                <div
-                  key={answer?.answerid}
-                  className={`${styles.answer} ${styles.fadeIn}`}
-                >
-                  <p className={styles.answerText}>{answer?.content}</p>
-                  <p className={styles.answerAuthor}>By: {answer?.user_name}</p>
+                <div className={styles.question_avatar_title}>
+                  <div className={styles.avator_container}>
+                    <IoPersonCircleOutline size={70} />
+                    <small>{answer?.user_name}</small>
+                  </div>
+                  <div className={styles.title_container}>
+                    <p> {answer?.content}</p>
+                  </div>
                 </div>
               ))
             ) : (
@@ -113,3 +116,8 @@ function AnswerPage() {
 }
 
 export default AnswerPage;
+
+// <div key={answer?.answerid} className={`${styles.answer} ${styles.fadeIn}`}>
+//   <p className={styles.answerText}>{answer?.content}</p>
+//   <p className={styles.answerAuthor}>By: {answer?.user_name}</p>
+// </div>;

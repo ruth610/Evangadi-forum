@@ -1,3 +1,4 @@
+// Home paeg
 import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import style from "./HomePage.module.css";
@@ -10,7 +11,6 @@ const HomePage = () => {
   const [questions, setQuestions] = useState([]);
   const { user } = useContext(AppState);
   const [searchTerm, setSearchTerm] = useState("");
-
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
@@ -64,3 +64,47 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
+
+/////////////////////
+// card jsx 
+import { Link } from "react-router-dom";
+import { IoPersonCircleOutline } from "react-icons/io5";
+import { FaGreaterThan } from "react-icons/fa";
+import style from "./card.module.css";
+
+const QuestionCard = ({ question }) => {
+  console.log(question);
+
+  return (
+    <section className={style.question_container}>
+      
+      <div className={style.question_avatar_title}>
+        <div className={style.avator_container}>
+          <IoPersonCircleOutline size={70} />
+          <small>{question.username}</small>
+        </div>
+        <div className={style.title_container}>
+          <Link
+            to={`/questions/${question.questionid}`}
+            className={style.question_title}
+          >
+            {question.title}
+          </Link>
+        </div>
+      </div>
+      <div className={style.expand_container}>
+        <Link
+          to={`/questions/${question.questionid}`}
+          className={style.expand_icon}
+        >
+          <FaGreaterThan />
+        </Link>
+      </div>
+    </section>
+  );
+};
+
+export default QuestionCard;
+
+ 

@@ -1,33 +1,4 @@
-.homepage{
-  width: 100%;
-  padding: 50px 150px;
-}
 
-
-.container{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  gap: 200px;
-  padding:30px 50px;
-  
-}
-
-.container button{
-  padding: 10px 30px;
-  background-color:  #007bff;
-  border: none;
-  color: white;
-  border-radius: 5px;
-  text-align: center;
-  cursor: pointer;
-  
-}
-
-.container p{
-  padding-right: 10px;
-}
 .question_container{
   display: flex;
   justify-content: space-between;
@@ -46,14 +17,11 @@
 }
 .question_line:hover{
 background-color:#f0f0f0;
- /* transform: translateX(-5px); */
- 
-
 }
 
 
 .question_title{
-  font-size: 25px;
+  font-size: 23px;
   color: #104175;
 }
 .qn_title  :hover {
@@ -71,11 +39,6 @@ background-color:#f0f0f0;
 }
 
 
-
-/* .question_title  :hover {
-  animation: slideIcon 0.4s ease-in-out;  
-} */
-
 .user{
   display: flex;
   flex-direction: column;
@@ -88,7 +51,6 @@ background-color:#f0f0f0;
 }
 
 .user svg {
-  /* background-color: transparent; */
   border-radius: 50%;
   transition: background-color 0.4s ease;
   
@@ -111,11 +73,8 @@ transition: transform 0.4s ease-in-out;
 .question_line:hover .expand_icon {
   transform: translateX(-10px);
 }
-/* .question_line:hover .expand_icon   {
-  animation: slideIcon 0.4s ease-in-out;
+
+.question_container svg{
+  cursor: pointer;
+  color: #012456;
 }
-@keyframes slideIcon {
-  0% { transform: translateX(0); }
-  50% { transform: translateX(-5px); }
-  100% { transform: translateX(0); }
-} */

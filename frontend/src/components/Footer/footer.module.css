@@ -73,6 +73,7 @@
     display: flex;
     display: block;
     height: 476px;
+      bottom: -490px;
   }
 
   .logo {
