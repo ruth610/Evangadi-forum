@@ -1,81 +1,80 @@
-.question_container {
-  padding: 30px 0 15px;
-  border-bottom: 1px solid rgb(148, 147, 147); 
-}
-.question_container  svg{
-color: #002356;
-}
-.question_container:hover {
 
-  cursor: pointer;
-}
-
-.question_container:hover .user svg{
-border-radius: 50%;
-background-color: #002356;
-}
-
-
-.question_container:hover svg{
-  color: white;
-}
-.question_container:hover .expand_icon svg{
-  color: #002356;
-  height: 23px;
-  width: 73px;
-    /* transition: all 0.3s ease-in-out; */
-}
-
-.question_line {
+.question_container{
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
-.qn_title {
+.question_line{
   display: flex;
   align-items: center;
-  gap: 15px;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  transition: background-color 0.3s ease;
+     
+  
+}
+.question_line:hover{
+background-color:#f0f0f0;
 }
 
-.user {
+
+.question_title{
+  font-size: 23px;
+  color: #104175;
+}
+.qn_title  :hover {
+  animation: slideIcon 0.4s ease-in-out;  
+}
+
+.qn_title{
+  flex-grow:1;
+  display: flex;
+  align-items: center;
+  
+  gap: 40px;
+  
+
+}
+
+
+.user{
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 10px;
+  align-items: center;padding-top: 5px;
   text-align: center;
-  font-weight: bold;
+  width: 80px;
+  min-width: 80px;
+ 
 }
 
-.question_title {
-  font-size: 18px;
-  font-weight: 600;
-  color: black;
-  text-decoration: none;
-  transition: 0.05s;
+.user svg {
+  border-radius: 50%;
+  transition: background-color 0.4s ease;
+  
 }
 
-.question_title:hover {
-  color: rgb(104, 104, 255);
+.question_line:hover .user svg  {
+  background-color: #d1d1d1;
 }
 
-.expand_icon {
-  text-decoration: none;
-  color: rgb(104, 104, 255);
+.expand_icon{
+  margin-left: auto;
+  display: flex;
   font-size: 20px;
-  transition: 0.3s;
+color: #555;
+cursor: pointer;
+transition: transform 0.4s ease-in-out;
+
 }
 
-.expand_icon:hover {
-  color: rgb(145, 145, 252);
-}
-/* Responsive Design for Small Screens */
-@media screen and (max-width: 468px) {
-  .question_container {
-  padding: 15px 0 15px;
-  border-bottom: 1px solid rgb(148, 147, 147); 
-}
-.question_container .question_title{
-  font-size: 15px;
+.question_line:hover .expand_icon {
+  transform: translateX(-10px);
 }
 
+.question_container svg{
+  cursor: pointer;
+  color: #012456;
 }

@@ -9,7 +9,8 @@ import axiosConfig from "./../../axiosConfig";
 const HomePage = () => {
   const [questions, setQuestions] = useState([]);
   const { user } = useContext(AppState);
-  console.log(user);
+  const [searchTerm, setSearchTerm] = useState("");
+
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
@@ -26,7 +27,9 @@ const HomePage = () => {
 
     fetchQuestions();
   }, []);
-
+  const filteredQuestions = questions.filter((data) =>
+    data.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
   return (
     <Layout>
       <section className={style.homepage}>
@@ -39,14 +42,22 @@ const HomePage = () => {
             <p>Welcome: {user?.username}</p>
           </div>
         </div>
-
+        {/* Search Bar */}
+        <div className={style.searchContainer}>
+          <input
+            type="text"
+            placeholder="Search questions..."
+            className={style.searchBar}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
         <div className={style.questions}>
-          <p>Questions</p>
           <hr />
         </div>
-        {questions.map((data, index) => (
-  <QuestionCard key={index} question={data} />
-)) }
+        {filteredQuestions.map((data, index) => (
+          <QuestionCard key={index} question={data} />
+        ))}
       </section>
     </Layout>
   );

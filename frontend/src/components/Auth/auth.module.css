@@ -5,7 +5,7 @@
   background-color: white;
   max-width: 600px;
   z-index: 50;
-  position: relative;
+  /* position: relative; */
 }
 
 .input_form {

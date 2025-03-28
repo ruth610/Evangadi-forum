@@ -4,14 +4,14 @@ import { FaGreaterThan } from "react-icons/fa";
 import style from "./card.module.css";
 
 const QuestionCard = ({ question }) => {
-    console.log(question);
-    
+  console.log(question);
+
   return (
     <div className={style.question_container}>
       <div className={style.question_line}>
         <div className={style.qn_title}>
           <div className={style.user}>
-            <IoPersonCircleOutline size={70}  />
+            <IoPersonCircleOutline size={"70px"} />
             <small>{question.username}</small>
           </div>
 
