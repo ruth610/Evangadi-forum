@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import style from "./HomePage.module.css";
+import style from "./homePage.module.css";
 import { AppState } from "../../components/protectedRoute/ProtectedRoute";
 import QuestionCard from "../../components/QuestionCard/QuestionCard";
 import Layout from "../../components/Layout/Layout";
@@ -10,6 +10,9 @@ const HomePage = () => {
   const [questions, setQuestions] = useState([]);
   const { user } = useContext(AppState);
   const [searchTerm, setSearchTerm] = useState("");
+  const [visibleQuestions, setVisibleQuestions] = useState([]);
+  const [nextIndex, setNextIndex] = useState(6); // Start with the first 6
+  const questionsPerPage = 6;
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -27,9 +30,25 @@ const HomePage = () => {
 
     fetchQuestions();
   }, []);
-  const filteredQuestions = questions.filter((data) =>
+
+  useEffect(() => {
+    // Initial display of the first 6 questions
+    setVisibleQuestions(questions.slice(0, questionsPerPage));
+  }, [questions]);
+
+  const filteredQuestions = visibleQuestions.filter((data) =>
     data.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleShowMore = () => {
+    const newVisibleQuestions = questions.slice(
+      0,
+      nextIndex + questionsPerPage
+    );
+    setVisibleQuestions(newVisibleQuestions);
+    setNextIndex(nextIndex + questionsPerPage);
+  };
+
   return (
     <Layout>
       <section className={style.homepage}>
@@ -42,6 +61,7 @@ const HomePage = () => {
             <p>Welcome: {user?.username}</p>
           </div>
         </div>
+
         {/* Search Bar */}
         <div className={style.searchContainer}>
           <input
@@ -52,12 +72,24 @@ const HomePage = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
+
         <div className={style.questions}>
           <hr />
         </div>
+
         {filteredQuestions.map((data, index) => (
-          <QuestionCard key={index} question={data} />
+          <div key={index} className={style.questionCard}>
+            <QuestionCard question={data} />
+          </div>
         ))}
+
+        {visibleQuestions.length < questions.length && (
+          <div style={{ textAlign: "center", marginTop: "20px" }}>
+            <button className={style.showMoreButton} onClick={handleShowMore}>
+              Show More
+            </button>
+          </div>
+        )}
       </section>
     </Layout>
   );

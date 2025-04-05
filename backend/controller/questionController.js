@@ -2,8 +2,6 @@ const { StatusCodes } = require("http-status-codes");
 const dbConnection = require("../db/dbConfig");
 const { v4: uuidv4 } = require("uuid");
 
-
-
 async function postQuestion(req, res) {
   try {
     const { description, title, tag } = req.body;
@@ -49,12 +47,19 @@ async function getallQuestion(req, res) {
     // Fetch all questions with user details from the database
     const [questionsRow] = await dbConnection.query(
       `SELECT 
-        q.id, q.questionid, q.title, q.description as content, q.userid,  
-        u.username, u.firstname, u.lastname,
-        (SELECT COUNT(*) FROM answerTable AS a WHERE a.questionid = q.questionid) AS total_answers
-      FROM questionTabel AS q
-      JOIN userTable AS u ON q.userid = u.userid
-      ORDER BY q.id DESC`
+    questionTable.id, 
+    questionTable.questionid, 
+    questionTable.title, 
+    questionTable.description as content, 
+    questionTable.userid,  
+    userTable.username, 
+    userTable.firstname, 
+    userTable.lastname,
+    questionTable.created_at,  
+    (SELECT COUNT(*) FROM answerTable AS answerTable WHERE answerTable.questionid = questionTable.questionid) AS total_answers
+  FROM questionTabel AS questionTable
+  JOIN userTable AS userTable ON questionTable.userid = userTable.userid
+  ORDER BY questionTable.id DESC`
     );
 
     // Check if any questions are available
@@ -76,32 +81,30 @@ async function getallQuestion(req, res) {
 }
 
 async function singleQuestion(req, res) {
-    try {
-        const { question_id } = req.params; 
-        console.log(req.params); 
-        console.log(question_id);
-        const [rows] = await dbConnection.query(
-          `SELECT questionid,title, description AS content,userid AS user_id FROM questionTabel WHERE questionid = ?`,
-          [question_id]
-        );
+  try {
+    const { question_id } = req.params;
+    
+    const [rows] = await dbConnection.query(
+      `SELECT questionid,title, description AS content,userid AS user_id FROM questionTabel WHERE questionid = ?`,
+      [question_id]
+    );
 
-        if (rows.length === 0) {
-            return res.status(StatusCodes.NOT_FOUND).json({
-                error: "Not Found",
-                message: "The requested question could not be found",
-            });
-        }
-
-        return res.status(StatusCodes.OK).json({
-            question: rows[0]
-        });
-    } catch (error) {
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-            error: "Internal Server Error",
-            message: "An unexpected error occurred."
-        });
+    if (rows.length === 0) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        error: "Not Found",
+        message: "The requested question could not be found",
+      });
     }
-}
 
+    return res.status(StatusCodes.OK).json({
+      question: rows[0],
+    });
+  } catch (error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      error: "Internal Server Error",
+      message: "An unexpected error occurred.",
+    });
+  }
+}
 
 module.exports = { postQuestion, singleQuestion, getallQuestion };

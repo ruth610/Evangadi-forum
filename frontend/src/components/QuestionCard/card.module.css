@@ -78,3 +78,10 @@ transition: transform 0.4s ease-in-out;
   cursor: pointer;
   color: #012456;
 }
+
+.timeAgo {
+  font-size: 14px;
+  color: #888;
+  margin-top: 5px;
+  font-style: italic;
+}
