@@ -19,7 +19,7 @@ async function postQuestion(req, res) {
     const questionid = uuidv4();
     ///////
     const [existingQuestion] = await dbConnection.query(
-      "SELECT * FROM questionTabel WHERE title = ? AND description = ?",
+      "SELECT * FROM questionTable WHERE title = ? AND description = ?",
       [title, description]
     );
     if (existingQuestion.length > 0) {
@@ -30,7 +30,7 @@ async function postQuestion(req, res) {
     //here first we have to insert our data into the question table
 
     await dbConnection.query(
-      `INSERT INTO questionTabel(userid,questionid,description,title,tag) VALUES(?,?,?,?,?)`,
+      `INSERT INTO questionTable(userid,questionid,description,title,tag) VALUES(?,?,?,?,?)`,
       [userid, questionid, description, title, tagToInsert]
     );
     return res.status(StatusCodes.CREATED).json({
@@ -49,12 +49,22 @@ async function getallQuestion(req, res) {
     // Fetch all questions with user details from the database
     const [questionsRow] = await dbConnection.query(
       `SELECT 
-        q.id, q.questionid, q.title, q.description as content, q.userid,  
-        u.username, u.firstname, u.lastname,
-        (SELECT COUNT(*) FROM answerTable AS a WHERE a.questionid = q.questionid) AS total_answers
-      FROM questionTabel AS q
-      JOIN userTable AS u ON q.userid = u.userid
-      ORDER BY q.id DESC`
+    questionTable.id, 
+    questionTable.questionid, 
+    questionTable.title, 
+    questionTable.description AS content, 
+    questionTable.userid,  
+    userTable.username, 
+    userTable.firstname, 
+    userTable.lastname,
+    (
+        SELECT COUNT(*) 
+        FROM answerTable 
+        WHERE answerTable.questionid = questionTable.questionid
+    ) AS total_answers
+FROM questionTable
+INNER JOIN userTable ON questionTable.userid = userTable.userid
+ORDER BY questionTable.id DESC`
     );
 
     // Check if any questions are available
@@ -81,7 +91,7 @@ async function singleQuestion(req, res) {
         console.log(req.params); 
         console.log(question_id);
         const [rows] = await dbConnection.query(
-          `SELECT questionid,title, description AS content,userid AS user_id FROM questionTabel WHERE questionid = ?`,
+          `SELECT questionid,title, description AS content,userid AS user_id FROM questionTable WHERE questionid = ?`,
           [question_id]
         );
 

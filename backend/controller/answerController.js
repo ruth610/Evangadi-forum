@@ -16,7 +16,7 @@ async function postAnswer(req, res) {
 
     // Check if question exists
     const [questionExists] = await dbconnection.query(
-      "SELECT * FROM questionTabel WHERE questionid = ?",
+      "SELECT * FROM questionTable WHERE questionid = ?",
       [questionid]
     );
 
@@ -26,6 +26,8 @@ async function postAnswer(req, res) {
         message: "The specified question does not exist",
       });
     }
+
+
 
     // Insert answer into the database
     await dbconnection.query(
@@ -43,10 +45,12 @@ async function postAnswer(req, res) {
   }
 }
 
+
+// get answer for a question
 async function getAnswer(req, res) {
   const questionId = req.params.question_id;
   try {
-    const [result] = await dbconnection.query(
+    const [result ] = await dbconnection.query(
       `SELECT answerid, answer as content, username as user_name
 FROM answerTable
 JOIN userTable USING (userid)

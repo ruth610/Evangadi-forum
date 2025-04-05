@@ -1,28 +1,56 @@
 CREATE TABLE userTable(
-    userid INT(20) NOT NULL AUTO_INCREMENT,
+    userid INT NOT NULL AUTO_INCREMENT,
     username VARCHAR(20) NOT NULL,
     firstname VARCHAR(20) NOT NULL,
     lastname VARCHAR(20) NOT NULL,
-    email VARCHAR(20) NOT NULL,
+    email VARCHAR(50) NOT NULL,  -- Increased length for email
     password VARCHAR(100) NOT NULL,
-    PRIMARY KEY(userid)
+    PRIMARY KEY(userid),
+    UNIQUE (username),  -- Added uniqueness
+    UNIQUE (email)      -- Added uniqueness
 );
-CREATE TABLE questionTabel(
-    id INT(20) NOT NULL AUTO_INCREMENT,
+
+CREATE TABLE questionTable(  -- Fixed typo in table name (was 'questionTabel')
+    id INT NOT NULL AUTO_INCREMENT,
     questionid VARCHAR(100) NOT NULL UNIQUE,
-    userid INT(20) NOT NULL,
+    userid INT NOT NULL,
     title VARCHAR(150) NOT NULL,
-    description VARCHAR(300) NOT NULL,
+    description TEXT NOT NULL,  -- Changed to TEXT for longer content
     tag VARCHAR(20),
-    PRIMARY KEY(id, questionid),
-    FOREIGN key(userid) REFERENCES userTable(userid)
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Added timestamp
+    PRIMARY KEY(id),
+    FOREIGN KEY (userid) REFERENCES userTable(userid) ON DELETE CASCADE
 );
+
 CREATE TABLE answerTable(
-    answerid INT(20) NOT NULL AUTO_INCREMENT,
-    userid INT(20) NOT NULL,
+    answerid INT NOT NULL AUTO_INCREMENT,
+    userid INT NOT NULL,
     questionid VARCHAR(100) NOT NULL,
-    answer VARCHAR(200) NOT NULL,
+    answer TEXT NOT NULL,  -- Changed to TEXT
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Added timestamp
     PRIMARY KEY(answerid),
-    FOREIGN key(userid) REFERENCES userTable(userid),
-    FOREIGN key(questionid) REFERENCES questionTabel(questionid)
-)
+    FOREIGN KEY (userid) REFERENCES userTable(userid) ON DELETE CASCADE,
+    FOREIGN KEY (questionid) REFERENCES questionTable(questionid) ON DELETE CASCADE
+);
+
+CREATE TABLE question_vote(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    questionid VARCHAR(100) NOT NULL,
+    vote_type ENUM('upvote', 'downvote') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_question_vote (user_id, questionid),  -- Fixed reference
+    FOREIGN KEY (user_id) REFERENCES userTable(userid) ON DELETE CASCADE,
+    FOREIGN KEY (questionid) REFERENCES questionTable(questionid) ON DELETE CASCADE
+);
+
+CREATE TABLE answer_votes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    answerid INT NOT NULL,
+    vote_type ENUM('upvote', 'downvote') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_answer_vote (user_id, answerid),
+    FOREIGN KEY (user_id) REFERENCES userTable(userid) ON DELETE CASCADE,
+    FOREIGN KEY (answerid) REFERENCES answerTable(answerid) ON DELETE CASCADE
+);
