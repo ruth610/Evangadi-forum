@@ -10,7 +10,6 @@ function Footer() {
 <div className={styles.outer_container}>
       <div className={styles.logo}size={1}>
           <img src={logo}alt="logo" />
-
         <div className={styles.social}>
          <FaFacebook size={27}/>
         <IoLogoInstagram size={27}/>

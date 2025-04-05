@@ -4,7 +4,6 @@ import { FaGreaterThan } from "react-icons/fa";
 import style from "./card.module.css";
 
 const QuestionCard = ({ question }) => {
-  console.log(question);
 
   return (
     <div className={style.question_container}>

@@ -15,6 +15,7 @@ function Login({ setShowLogin }) {
   const [loading ,setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  
   function passToggler() {
     setShowPass(!showPass);
     if (passwordDom.current.type === "password") {
@@ -74,9 +75,7 @@ function Login({ setShowLogin }) {
           <button type="submit" className={styles.login}>
             {
               loading ? <ClipLoader color="white" size={20} /> : "Login"
-              
             }
-           
           </button>
         </form>
       </section>

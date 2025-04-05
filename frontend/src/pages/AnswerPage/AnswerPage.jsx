@@ -28,7 +28,7 @@ function AnswerPage() {
         headers: { Authorization: `Bearer ${token}` },
       });
       setAnswers(answersResponse.data.answer);
-      // console.log(answersResponse);
+    
     } catch (error) {
       if (error.response) {
         setError(error?.response?.data?.message);
@@ -117,7 +117,3 @@ function AnswerPage() {
 
 export default AnswerPage;
 
-// <div key={answer?.answerid} className={`${styles.answer} ${styles.fadeIn}`}>
-//   <p className={styles.answerText}>{answer?.content}</p>
-//   <p className={styles.answerAuthor}>By: {answer?.user_name}</p>
-// </div>;

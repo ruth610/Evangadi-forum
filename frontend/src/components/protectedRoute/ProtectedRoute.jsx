@@ -27,7 +27,7 @@ const ProtectedRoute = () => {
         setUser(data);
         setLoading(false);
       } catch (error) {
-        console.log(error.response?.data);
+        // console.log(error.response?.data);
 
       }finally{
         setLoading(false);

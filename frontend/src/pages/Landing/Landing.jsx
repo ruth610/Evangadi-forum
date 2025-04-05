@@ -5,7 +5,7 @@ import styles from "./landing.module.css";
 import homeBg from "./../../assets/home-backgraund.png";
 import Layout from "../../components/Layout/Layout";
 import About from "../../components/About/About";
-// import { useSpring, animated } from 'react-spring';
+
 function Landing() {
   const [showLogin, setShowLogin] = useState(true);
   const [slideDirection, setSlideDirection] = useState("");

@@ -34,7 +34,6 @@ function AskQuestion() {
       );
 
       setRedirecting("Question posted successfully");
-      // console.log(postquest);
       navigate("/home");
     } catch (error) {
       if (error.response) {
