@@ -3,7 +3,7 @@ import styles from "./about.module.css";
 function About() {
   return (
     <section>
-      <section className={styles.evangadi_questiona_answer}>
+      <section className={styles.evangadi_question_answer}>
         <span>About</span>
         <div className={styles.question_paragraph}>
           <h1>Evangadi Networks Q&A</h1>
