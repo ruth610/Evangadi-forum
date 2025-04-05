@@ -5,14 +5,14 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./auth.module.css";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { GoEye } from "react-icons/go";
-import {ClipLoader} from 'react-spinners';
+import { ClipLoader } from "react-spinners";
 
 function Login({ setShowLogin }) {
   const emailDom = useRef(null);
   const passwordDom = useRef(null);
   const [showPass, setShowPass] = useState(true);
   const [textpass, setTextPass] = useState("password");
-  const [loading ,setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   
@@ -43,10 +43,9 @@ function Login({ setShowLogin }) {
       localStorage.setItem("token", data.token);
       navigate("/home");
     } catch (error) {
-      setError(error?.response?.data?.msg)
-      
-    }finally{
-      setLoading(false)
+      setError(error?.response?.data?.msg);
+    } finally {
+      setLoading(false);
     }
   }
   return (
@@ -60,10 +59,19 @@ function Login({ setShowLogin }) {
           Don't have an account?
           <span className={styles.sign_in}> Create a new account</span>
         </p>
-        <span style={{color:'red',fontSize:'18px',marginLeft:'10px'}}>{error}</span>
+        <span style={{ color: "red", fontSize: "18px", marginLeft: "10px" }}>
+          {error}
+        </span>
         <form action="" onSubmit={handlesubmit}>
           <div className={styles.email_container}>
-            <input type="email" placeholder="Email" ref={emailDom} />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              ref={emailDom}
+              autocomplete="email"
+              required
+            />
           </div>
           <br />
           <div className={styles.password_container}>
@@ -73,9 +81,13 @@ function Login({ setShowLogin }) {
             </span>
           </div>
           <button type="submit" className={styles.login}>
+<<<<<<< HEAD
             {
               loading ? <ClipLoader color="white" size={20} /> : "Login"
             }
+=======
+            {loading ? <ClipLoader color="white" size={20} /> : "Login"}
+>>>>>>> 66ca2d6bae01bfe80e6d9a82ac1a6e580477116c
           </button>
         </form>
       </section>

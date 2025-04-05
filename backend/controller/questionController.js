@@ -2,8 +2,6 @@ const { StatusCodes } = require("http-status-codes");
 const dbConnection = require("../db/dbConfig");
 const { v4: uuidv4 } = require("uuid");
 
-
-
 async function postQuestion(req, res) {
   try {
     const { description, title, tag } = req.body;
@@ -88,30 +86,27 @@ ORDER BY questionTable.id DESC`
 async function singleQuestion(req, res) {
     try {
         const { question_id } = req.params; 
-        console.log(req.params); 
-        console.log(question_id);
         const [rows] = await dbConnection.query(
           `SELECT questionid,title, description AS content,userid AS user_id FROM questionTable WHERE questionid = ?`,
           [question_id]
         );
 
-        if (rows.length === 0) {
-            return res.status(StatusCodes.NOT_FOUND).json({
-                error: "Not Found",
-                message: "The requested question could not be found",
-            });
-        }
-
-        return res.status(StatusCodes.OK).json({
-            question: rows[0]
-        });
-    } catch (error) {
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-            error: "Internal Server Error",
-            message: "An unexpected error occurred."
-        });
+    if (rows.length === 0) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        error: "Not Found",
+        message: "The requested question could not be found",
+      });
     }
-}
 
+    return res.status(StatusCodes.OK).json({
+      question: rows[0],
+    });
+  } catch (error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      error: "Internal Server Error",
+      message: "An unexpected error occurred.",
+    });
+  }
+}
 
 module.exports = { postQuestion, singleQuestion, getallQuestion };

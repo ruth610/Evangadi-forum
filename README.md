@@ -1,126 +1,30 @@
-# 📌 Evangadi Forum Project
+# Evangadi Networks Q&A
 
-Welcome to the **Evangadi Forum** – a collaborative **Full Stack Web Application** where users can ask questions and get answers in a structured community-driven forum.
+Evangadi Networks is a platform that connects people from all stages of life to share knowledge and find mentors. Whether you're just starting out in elementary school or you're a seasoned professional, this app allows users to ask questions, provide answers, and engage with others in the community.
 
-📌 **Repository**: [GitHub - Evangadi Forum](https://github.com/amirethio/Evangadi-forum.git)
+## Features
+- **Ask Questions**: Users can post questions to the community.
+- **Answer Questions**: Users can provide answers to questions asked by others.
+- **Like and Dislike Answers**: Users can rate answers based on helpfulness.
+- **Mentorship**: Connect with experienced professionals and become a mentor.
 
----
+## Tech Stack
+- **Frontend**: React.js, React Router, Axios, CSS Modules
+- **Backend**: Node.js, Express.js, MongoDB (or MySQL/other DB)
+- **Authentication**: JWT (JSON Web Tokens)
+- **Styling**: CSS Modules, Custom Styling
 
-## 📌 About the Project
+## Getting Started
 
-The **Evangadi Forum** is a Q&A platform where users can:
-✅ Post questions 📌  
-✅ Answer questions 📝  
-✅ Authenticate using secure login/signup 🔐  
-✅ View all questions & answers 💡  
+### Prerequisites
+Before you begin, ensure you have the following installed:
+- [Node.js](https://nodejs.org/)
+- [npm](https://www.npmjs.com/)
+- [MySQL](https://www.MySQL.com/) or another database of your choice (MongoDb, PostgreSQL, etc.)
+- [MAMP](https://www.mamp.info/en/) for local database (if using MySQL)
 
----
+### Installation
 
-## 📌 Tech Stack
-
-### Backend
-
-- **Node.js & Express.js** - API development
-- **MySQL** - Database
-- **JWT & Bcrypt** - Authentication & security
-
-
-### Frontend
-
-- **React.js** - UI framework
-- **Axios** - API calls
-
----
-
-## 📌 Project Structure & Responsibilities
-
-Each team member is responsible for working **only within their assigned files**.
-
-```
-Evangadi-forum/
-│── backend/             # Backend (Node.js + Express)
-│   ├── controllers/     # API Controllers
-│   │   ├── answerController.js    ← [Amir Ali, Hussien Endris]
-│   │   ├── questionController.js  ← [Abebaw Abera, Abraham Woldesenbe, Ruth Legesse]
-│   │   ├── userController.js      ← [ Amir Ali, Hussien Endris]
-│   ├── db/              # Database-related files
-│   ├── middleware/      # Authentication & validation middleware
-│   ├── routes/          # API routes
-│   ├── package.json     # Backend dependencies
-│── frontend/            # Frontend (React.js)
-│   ├── public/
-│   │   ├── favicon.png  # Website favicon
-│   ├── src/             
-│   │   ├── assets/      # Static assets (images, fonts, etc.)
-│   │   ├── components/  # Reusable UI components
-│   │   │   ├── About/         ← [Abe Habtemariam]
-│   │   │   ├── Auth/          ← [Amira]
-│   │   │   ├── Footer/        ← [Belachew Gezahegn]
-│   │   │   ├── Header/        ← [Alemsegede Gizachew]
-│   │   │   ├── Layout/        ← [Team Use]
-│   │   ├── pages/        # Page components/views
-│   │   │   ├── AskQuestion/  ←[Mike]
-│   │   │   ├── HomePage/    ← [Dave Y]
-│   │   │   ├── Landing/     ← [Amir Ali]
-│   │   │   ├── QuestionDetail/    ← [Ashenafi Getachew]
-│── .gitignore            
-```
-
----
-
-## 📌 Contribution Guide
-
-### 🔀 Branching Strategy
-
-Each team member should create a **separate branch** for each feature/task assigned to them.
-
-#### 🔹 Creating a new branch
-```sh
-git checkout -b feature/branch-name
-```
-Example:
-```sh
-git checkout -b feature/signup
-```
-
-#### 🔹 Pushing your branch
-```sh
-git add .
-git commit -m "Implemented signup feature"
-git push origin feature/branch-name
-```
-
-#### 🔹 Creating a Pull Request (PR)
-1. Go to the repository on GitHub.
-2. Click on **Pull Requests** → **New Pull Request**.
-3. Select your branch and compare it with `main`.
-4. Add a description of the changes and request a review.
-5. Once approved, merge the branch into `main`.
-
-#### 🔹 Merging to Main Branch
-1. Ensure your branch is updated with the latest `main` changes:
-```sh
-git checkout main
-git pull origin main
-git checkout feature/branch-name
-git merge main
-```
-2. After testing, create a pull request to merge your feature branch → `main`.
-3. Once reviewed and approved, merge the PR.
-4. Pull the latest changes from `main` to keep your local branch updated:
-```sh
-git checkout main
-git pull origin main
-```
-
-#### 🔹 Keeping Your Branch Updated
-If your branch is outdated compared to `main`:
-```sh
-git checkout main
-git pull origin main
-git checkout feature-branch-name
-git merge main
-```
-Resolve conflicts if any, then push the changes again.
-
-🚀 **Happy Coding!** 🚀
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/evangadi-app.git

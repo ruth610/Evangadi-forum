@@ -26,7 +26,7 @@ function Register({ setShowLogin }) {
   }
   async function handlesubmit(e) {
     e.preventDefault();
-    
+
     setErrorMessage("");
     const userNameValue = userNameDom.current.value;
     const firstNameValue = firstNameDom.current.value;
@@ -44,10 +44,10 @@ function Register({ setShowLogin }) {
       setErrorMessage("please provide all required information");
       return;
     }
-     if (passwordValue.length < 8) {
-       setErrorMessage("Password must be at least 8 characters long.");
-       return;
-     }
+    if (passwordValue.length < 8) {
+      setErrorMessage("Password must be at least 8 characters long.");
+      return;
+    }
     try {
       const response = await Instance.post("/user/register", {
         username: userNameValue,
@@ -76,7 +76,8 @@ function Register({ setShowLogin }) {
           </span>
         </p>
         <span style={{ color: "red", fontSize: "18px", marginLeft: "10px" }}>
-          {errorMessage}  </span>
+          {errorMessage}{" "}
+        </span>
         <form action="" onSubmit={handlesubmit}>
           <div>
             <input ref={userNameDom} type="text" placeholder="username" />
@@ -87,7 +88,13 @@ function Register({ setShowLogin }) {
           </div>
 
           <div>
-            <input type="email" placeholder="email" ref={emailDom} />
+            <input
+              type="email"
+              placeholder="email"
+              ref={emailDom}
+              name="email"
+              autoComplete="email"
+            />
           </div>
 
           <div className={styles.password_container}>
@@ -97,7 +104,7 @@ function Register({ setShowLogin }) {
             </span>
           </div>
           <div className={styles.bottom_form}>
-            <div  className={styles.register_bottom_center}>
+            <div className={styles.register_bottom_center}>
               <p className={` ${styles.center}`}>
                 <span>
                   I agree to the{" "}
