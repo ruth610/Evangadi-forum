@@ -25,11 +25,7 @@ function Footer() {
             <li><a href="#">How it works</a></li>
             <li><a href="#">Terms of Service</a></li>
             <li><a href="#">Privacy Policy</a></li>
-<<<<<<< HEAD
           </ul>
-=======
-          </ul>cd
->>>>>>> caaf5a94e32dd2d13acab2f5a4eeab9ffb54d734
         </div>
 
         <div className={styles.links}>
