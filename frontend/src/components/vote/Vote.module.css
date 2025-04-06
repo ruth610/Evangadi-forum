@@ -1,0 +1,13 @@
+.vote_btn{
+    padding: 2px;
+    background-color: white;
+    transition: all 0.2s ease-in-out;
+}
+.vote_btn:hover{
+    background-color: white;
+    transform: scale(1.15);
+}
+.vote_container{
+    display: flex;
+    gap: 10px;
+}
