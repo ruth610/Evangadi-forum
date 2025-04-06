@@ -48,7 +48,6 @@ function AnswerPage() {
   //handle submit answer
   const handleSubmitAnswer = async (e) => {
     e.preventDefault();
-
     if (newAnswer.trim() === "") {
       setError("Please fill in the answer field.");
       return;
