@@ -3,6 +3,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+ 
+  overflow: hidden;
 }
 .question_line{
   display: flex;
@@ -21,7 +23,7 @@ background-color:#f0f0f0;
 
 
 .question_title{
-  font-size: 23px;
+  font-size: clamp(1rem, 4vw, 1.5rem);
   color: #104175;
 }
 .qn_title  :hover {
@@ -47,7 +49,6 @@ background-color:#f0f0f0;
   text-align: center;
   width: 80px;
   min-width: 80px;
- 
 }
 
 .user svg {

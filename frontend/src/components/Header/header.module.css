@@ -2,7 +2,7 @@
 .header {
 position: sticky;
   top: 0;
-  width: 100%;
+  /* width: 100%; */
   z-index: 1000000; 
   background-color: white;
   display: flex;
@@ -16,7 +16,10 @@ position: sticky;
   background-color: white;
 
 }
-
+.menu{
+  display: none;
+  /* overflow: hidden; */
+}
 .header img {
   width: auto;
 }
@@ -49,8 +52,8 @@ position: sticky;
 .navbar ul a {
   text-decoration: none;
   color: black;
-  font-weight: 600;
-  opacity: 0.9;
+  font-weight: 550;
+  /* opacity: 0.9; */
 }
 
 .navbar ul li:hover, 
@@ -131,4 +134,40 @@ position: sticky;
     margin-left: -20px;
     
   }
+}
+
+@media (max-width:570px){
+  .navbar{
+    display: none;
+  }
+  .menu{
+  display: block;
+  color: #FF8500;
+}
+}
+.mobile_toggler{
+  background-color: white;
+  position: absolute;
+  top: 73px;
+  left: 0;
+  width: 300px;
+  height: 100vh;
+  padding: 10px 30px;
+
+}
+
+.mobile_toggler ul  a  {
+  color: black;
+  margin:  px ;
+  
+}
+.mobile_toggler ul  li {
+  color: black;
+  margin: 5px ;
+  list-style-type: none;
+  
+}
+.mobile_toggler ul  a:hover {
+   color: #FF8500;
+
 }

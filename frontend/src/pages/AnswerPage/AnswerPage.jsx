@@ -4,7 +4,8 @@ import axios from "../../axiosConfig";
 import styles from "./AnswerPage.module.css";
 import Layout from "../../components/Layout/Layout";
 import { IoPersonCircleOutline } from "react-icons/io5";
-import { FaThumbsUp, FaThumbsDown } from "react-icons/fa"; // Import icons
+import { BiUpvote, BiDownvote } from "react-icons/bi";
+import { formatDistanceToNow } from "date-fns";
 
 function AnswerPage() {
   const { questionid } = useParams();
@@ -12,6 +13,7 @@ function AnswerPage() {
   const [answers, setAnswers] = useState([]);
   const [newAnswer, setNewAnswer] = useState("");
   const [error, setError] = useState("");
+  const [isVoting, setIsVoting] = useState(false);
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -29,16 +31,8 @@ function AnswerPage() {
       const answersResponse = await axios.get(`/answer/${questionid}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      console.log(answersResponse.data.answer);
       setAnswers(answersResponse.data.answer);
-<<<<<<< HEAD
-    
-=======
-      // Sorting answers by votes in descending order
-      const sortedAnswers = answersResponse.data.answer.sort(
-        (a, b) => b.votes - a.votes
-      );
-      setAnswers(sortedAnswers);
->>>>>>> 66ca2d6bae01bfe80e6d9a82ac1a6e580477116c
     } catch (error) {
       if (error.response) {
         setError(error?.response?.data?.message);
@@ -69,17 +63,97 @@ function AnswerPage() {
     }
   };
 
-  // Handle upvote/downvote
+  // Handle voting on an answer
   async function handleVote(answerId, type) {
+    if (isVoting) return;
+    setIsVoting(true);
     try {
-      await axios.post(
+      // Optimistically update the UI
+      setAnswers((prevAnswers) =>
+        prevAnswers.map((answer) => {
+          if (answer.answerid === answerId) {
+            const currentVote = answer.user_vote_status;
+            let newVoteCount = answer.vote_count;
+            let newVoteStatus = type;
+
+            if (currentVote === type) {
+              // Remove vote
+              newVoteCount =
+                type === "upvote"
+                  ? answer.vote_count - 1
+                  : answer.vote_count + 1;
+              newVoteStatus = null;
+            } else if (currentVote) {
+              // Switch vote
+              newVoteCount =
+                type === "upvote"
+                  ? answer.vote_count + 2
+                  : answer.vote_count - 2;
+            } else {
+              // New vote
+              newVoteCount =
+                type === "upvote"
+                  ? answer.vote_count + 1
+                  : answer.vote_count - 1;
+            }
+
+            return {
+              ...answer,
+              vote_count: newVoteCount,
+              user_vote_status: newVoteStatus,
+            };
+          }
+          return answer;
+        })
+      );
+
+      // Make API call
+      const response = await axios.post(
         "/answer/vote",
         { answerId, voteType: type },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      fetchQuestionAndAnswers(); // Refresh answers after voting
+
+      // Update with server response to ensure sync
+      setAnswers((prevAnswers) =>
+        prevAnswers.map((answer) => {
+          if (answer.answerid === answerId) {
+            return {
+              ...answer,
+              vote_count: response.data.voteCount,
+              user_vote_status: response.data.userVoteStatus,
+            };
+          }
+          return answer;
+        })
+      );
+    } catch (e) {
+      fetchQuestionAndAnswers();
+    } finally {
+      setIsVoting(false);
+    }
+  }
+
+  // time formatter function
+  function formatTimeAgo(dateString) {
+    if (!dateString) return "just now";
+
+    try {
+      // Replace space with T for ISO compliance
+      const utcDate = new Date(dateString.replace(" ", "T"));
+
+      // Convert UTC to local time using local Date object
+      const localTime = new Date(
+        utcDate.getTime() + new Date().getTimezoneOffset() * 60000 * -1
+      );
+
+      return formatDistanceToNow(localTime, {
+        addSuffix: true,
+        includeSeconds: true,
+      });
     } catch (error) {
-      console.error("Error voting:", error);
+      console.error("Error formatting time:", error);
+      return "recently";
     }
   }
 
@@ -102,19 +176,44 @@ function AnswerPage() {
                 className={styles.question_avatar_title}
               >
                 <div className={styles.avator_container}>
-                  <IoPersonCircleOutline size={70} />
+                  <IoPersonCircleOutline size={60} />
                   <small>{answer?.user_name}</small>
                 </div>
                 <div className={styles.title_container}>
                   <p>{answer?.content}</p>
-                  <div className={styles.voteContainer}>
-                    <button onClick={() => handleVote(answer.answerid, "up")}>
-                      <FaThumbsUp size={20} />
-                    </button>
-                    <span>{answer.votes}</span>
-                    <button onClick={() => handleVote(answer.answerid, "down")}>
-                      <FaThumbsDown size={20} />
-                    </button>
+                  <div className={styles.answer_info}>
+                    <div className={styles.vote_container}>
+                      <BiUpvote
+                        size={25}
+                        onClick={() =>
+                          !isVoting && handleVote(answer.answerid, "upvote")
+                        }
+                        color={
+                          answer.user_vote_status === "upvote"
+                            ? "#4CAF50"
+                            : "#757575"
+                        }
+                        className={styles.voteButton}
+                      />
+                      <span className={styles.vote_count}>
+                        {answer.vote_count}
+                      </span>
+                      <BiDownvote
+                        size={25}
+                        onClick={() =>
+                          !isVoting && handleVote(answer.answerid, "downvote")
+                        }
+                        color={
+                          answer.user_vote_status === "downvote"
+                            ? "#F44336"
+                            : "#757575"
+                        }
+                        className={styles.voteButton}
+                      />
+                    </div>
+                    <div className={styles.answer_time}>
+                      <span> {formatTimeAgo(answer.created_at)}</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -147,9 +246,4 @@ function AnswerPage() {
     </Layout>
   );
 }
-
 export default AnswerPage;
-<<<<<<< HEAD
-
-=======
->>>>>>> 66ca2d6bae01bfe80e6d9a82ac1a6e580477116c

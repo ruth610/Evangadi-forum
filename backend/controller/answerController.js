@@ -1,4 +1,4 @@
-const dbconnection = require('./../db/dbConfig')
+const dbconnection = require("./../db/dbConfig");
 const { StatusCodes } = require("http-status-codes");
 // post answer for a question
 async function postAnswer(req, res) {
@@ -27,8 +27,6 @@ async function postAnswer(req, res) {
       });
     }
 
-
-
     // Insert answer into the database
     await dbconnection.query(
       "INSERT INTO answerTable(userid, questionid, answer	) VALUES (?, ?, ?)",
@@ -45,21 +43,34 @@ async function postAnswer(req, res) {
   }
 }
 
-
 // get answer for a question
 async function getAnswer(req, res) {
   const questionId = req.params.question_id;
+  const userId = req.user.userid;
+
   try {
     const [result] = await dbconnection.query(
-      `SELECT answerid, answer as content, username as user_name, votes
-       FROM answerTable
-       JOIN userTable USING (userid)
-       WHERE questionid = ?
-       ORDER BY votes DESC;`, // Sort by votes
-      [questionId]
+      `SELECT 
+    answerTable.answerid,
+    answerTable.answer AS content,
+    userTable.username AS user_name,
+    answerTable.vote_count,
+    answerTable.created_at,
+    (
+      SELECT vote_type 
+      FROM answer_votes 
+      WHERE answer_votes.answerid = answerTable.answerid 
+        AND answer_votes.user_id = ?
+    ) AS user_vote_status
+  FROM answerTable
+  JOIN userTable ON answerTable.userid = userTable.userid
+  WHERE answerTable.questionid = ?
+   ORDER BY vote_count DESC `,
+      [userId, questionId]
     );
     return res.status(StatusCodes.OK).json({ answer: result });
   } catch (error) {
+    console.error("Error fetching answers:", error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       error: "Server Error",
       message: "Could not fetch answers.",
@@ -67,27 +78,85 @@ async function getAnswer(req, res) {
   }
 }
 
-
+// vote for an answer
 async function voteAnswer(req, res) {
   try {
-    const { answerId, voteType } = req.body; // voteType: "up" or "down"
-    if (!answerId || !["up", "down"].includes(voteType)) {
-      return res.status(400).json({ message: "Invalid request." });
+    const { answerId, voteType } = req.body;
+    const { userid } = req.user;
+
+    if (!answerId || !userid || !["upvote", "downvote"].includes(voteType)) {
+      return res.status(400).json({
+        message:
+          "Invalid request. Missing required fields or invalid vote type.",
+      });
     }
 
-    const voteChange = voteType === "up" ? 1 : -1;
+    // Check if user has already voted on this answer
+    const [existingVote] = await dbconnection.query(
+      "SELECT vote_type FROM answer_votes WHERE user_id = ? AND answerid = ?",
+      [userid, answerId]
+    );
+
+    let action = "";
+    let voteChange = 0;
+
+    if (existingVote.length > 0) {
+      // User already voted
+      if (existingVote[0].vote_type === voteType) {
+        // Remove vote (unvote)
+        await dbconnection.query(
+          "DELETE FROM answer_votes WHERE user_id = ? AND answerid = ?",
+          [userid, answerId]
+        );
+        action = "removed";
+        voteChange = voteType === "upvote" ? -1 : 1; // Remove upvote (-1) or downvote (+1)
+      } else {
+        // Switch vote type (upvote to downvote or vice versa)
+        await dbconnection.query(
+          "UPDATE answer_votes SET vote_type = ? WHERE user_id = ? AND answerid = ?",
+          [voteType, userid, answerId]
+        );
+        action = "switched";
+        voteChange = voteType === "upvote" ? 2 : -2; // Switching to upvote (+2) or downvote (-2)
+      }
+    } else {
+      // New vote
+      await dbconnection.query(
+        "INSERT INTO answer_votes (user_id, answerid, vote_type) VALUES (?, ?, ?)",
+        [userid, answerId, voteType]
+      );
+      action = "added";
+      voteChange = voteType === "upvote" ? 1 : -1;
+    }
+
+    // Update answer's vote count directly (more efficient than recalculating)
     await dbconnection.query(
-      "UPDATE answerTable SET votes = votes + ? WHERE answerid = ?",
+      "UPDATE answerTable SET vote_count = vote_count + ? WHERE answerid = ?",
       [voteChange, answerId]
     );
 
-    return res.status(200).json({ message: "Vote recorded." });
+    // Get updated vote count and user's current vote status
+    const [updatedAnswer] = await dbconnection.query(
+      "SELECT vote_count FROM answerTable WHERE answerid = ?",
+      [answerId]
+    );
+
+    const [currentVote] = await dbconnection.query(
+      "SELECT vote_type FROM answer_votes WHERE user_id = ? AND answerid = ?",
+      [userid, answerId]
+    );
+
+    return res.status(200).json({
+      message: `Vote ${action} successfully.`,
+      voteCount: updatedAnswer[0].vote_count,
+      userVoteStatus: currentVote.length > 0 ? currentVote[0].vote_type : null,
+    });
   } catch (error) {
-    return res.status(500).json({ message: "Server error." });
+    console.error("Vote error:", error);
+    return res
+      .status(500)
+      .json({ message: "Server error while processing vote." });
   }
 }
-
-
-
 
 module.exports = { postAnswer, getAnswer, voteAnswer };

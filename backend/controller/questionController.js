@@ -48,6 +48,7 @@ async function getallQuestion(req, res) {
     const [questionsRow] = await dbConnection.query(
       `SELECT 
     questionTable.id, 
+    questionTable.created_at,
     questionTable.questionid, 
     questionTable.title, 
     questionTable.description AS content, 

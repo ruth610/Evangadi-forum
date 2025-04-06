@@ -81,13 +81,9 @@ function Login({ setShowLogin }) {
             </span>
           </div>
           <button type="submit" className={styles.login}>
-<<<<<<< HEAD
             {
               loading ? <ClipLoader color="white" size={20} /> : "Login"
             }
-=======
-            {loading ? <ClipLoader color="white" size={20} /> : "Login"}
->>>>>>> 66ca2d6bae01bfe80e6d9a82ac1a6e580477116c
           </button>
         </form>
       </section>

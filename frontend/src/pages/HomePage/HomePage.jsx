@@ -10,8 +10,7 @@ const HomePage = () => {
   const [questions, setQuestions] = useState([]);
   const { user } = useContext(AppState);
   const [searchTerm, setSearchTerm] = useState("");
-  const [visibleQuestions, setVisibleQuestions] = useState([]);
-  const [nextIndex, setNextIndex] = useState(6); // Start with the first 6
+  const [currentPage, setCurrentPage] = useState(1);
   const questionsPerPage = 6;
 
   useEffect(() => {
@@ -31,23 +30,26 @@ const HomePage = () => {
     fetchQuestions();
   }, []);
 
-  useEffect(() => {
-    // Initial display of the first 6 questions
-    setVisibleQuestions(questions.slice(0, questionsPerPage));
-  }, [questions]);
+  // Get current questions
+  const indexOfLastQuestion = currentPage * questionsPerPage;
+  const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
+  const currentQuestions = questions.slice(
+    indexOfFirstQuestion,
+    indexOfLastQuestion
+  );
 
-  const filteredQuestions = visibleQuestions.filter((data) =>
+  const filteredQuestions = currentQuestions.filter((data) =>
     data.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleShowMore = () => {
-    const newVisibleQuestions = questions.slice(
-      0,
-      nextIndex + questionsPerPage
-    );
-    setVisibleQuestions(newVisibleQuestions);
-    setNextIndex(nextIndex + questionsPerPage);
-  };
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  // Calculate page numbers
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(questions.length / questionsPerPage); i++) {
+    pageNumbers.push(i);
+  }
 
   return (
     <Layout>
@@ -56,7 +58,6 @@ const HomePage = () => {
           <Link to="/ask">
             <button className={style.askButton}>Ask Question</button>
           </Link>
-
           <div className={style.welcome}>
             <p>Welcome: {user?.username}</p>
           </div>
@@ -83,13 +84,20 @@ const HomePage = () => {
           </div>
         ))}
 
-        {visibleQuestions.length < questions.length && (
-          <div style={{ textAlign: "center", marginTop: "20px" }}>
-            <button className={style.showMoreButton} onClick={handleShowMore}>
-              Show More
+        {/* Pagination */}
+        <div className={style.pagination}>
+          {pageNumbers.map((number) => (
+            <button
+              key={number}
+              onClick={() => paginate(number)}
+              className={`${style.pageButton} ${
+                currentPage === number ? style.active : ""
+              }`}
+            >
+              {number}
             </button>
-          </div>
-        )}
+          ))}
+        </div>
       </section>
     </Layout>
   );

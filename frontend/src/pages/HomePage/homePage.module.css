@@ -80,3 +80,43 @@
   border-radius: 5px;
   cursor: pointer;
 }
+
+/*  */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 5px;
+  color: black;
+  width: 100%;
+}
+
+.pageButton {
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+  border-radius: 3px;
+  color: black;
+  width:auto;
+}
+
+.pageButton:hover {
+  background: #eee;
+}
+
+.pageButton.active {
+  background: #012456;
+  color: white;
+  border-color: #012456;
+}
+
+@media (max-width:409px){
+  .welcome{
+    display: none;
+  }
+    .container {
+    padding: 20px 0px 0 0px;
+  }
+}

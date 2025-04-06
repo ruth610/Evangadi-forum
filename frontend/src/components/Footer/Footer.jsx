@@ -8,15 +8,6 @@ import { Link } from "react-router-dom";
 function Footer() {
   return (
     <>
-<<<<<<< HEAD
-<div className={styles.outer_container}>
-      <div className={styles.logo}size={1}>
-          <img src={logo}alt="logo" />
-        <div className={styles.social}>
-         <FaFacebook size={27}/>
-        <IoLogoInstagram size={27}/>
-         <BsYoutube size={27}/>
-=======
       <div className={styles.outer_container}>
         <div className={styles.logo} size={1}>
           <Link to="/home">
@@ -28,7 +19,6 @@ function Footer() {
             <IoLogoInstagram size={27} />
             <BsYoutube size={27} />
           </div>
->>>>>>> 66ca2d6bae01bfe80e6d9a82ac1a6e580477116c
         </div>
 
         <div className={styles.links}>
