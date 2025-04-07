@@ -78,3 +78,14 @@ transition: transform 0.4s ease-in-out;
   cursor: pointer;
   color: #012456;
 }
+.title_date{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.title_date small{
+  color: #565758;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: Arial, Helvetica, sans-serif;
+}

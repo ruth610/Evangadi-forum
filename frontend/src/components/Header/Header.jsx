@@ -22,7 +22,7 @@ function Header() {
         <ul>
           <div className={styles.home}>
             <Link to={"/home"}>Home</Link>
-            <li>How it Works</li>
+            <Link to={"/howItWorks"}>How it Works</Link>
           </div>
 
           <li className={styles.btn} onClick={logout}>

@@ -47,22 +47,21 @@ async function postQuestion(req, res) {
 async function getallQuestion(req, res) {
   try {
     // Fetch all questions with user details from the database
+    const limit = parseInt(req.query.limit) || 10;
+    const offset = parseInt(req.query.offset) || 0;
     const [questionsRow] = await dbConnection.query(
       `SELECT 
-        q.id, q.questionid, q.title, q.description as content, q.userid,  
-        u.username, u.firstname, u.lastname,
-        (SELECT COUNT(*) FROM answerTable AS a WHERE a.questionid = q.questionid) AS total_answers
-      FROM questionTabel AS q
-      JOIN userTable AS u ON q.userid = u.userid
-      ORDER BY q.id DESC`
+        questionTabel.id, questionTabel.created_at,questionTabel.questionid, questionTabel.title, questionTabel.description as content, questionTabel.userid,  
+        userTable.username, userTable.firstname, userTable.lastname,
+        (SELECT COUNT(*) FROM answerTable WHERE answerTable.questionid = questionTabel.questionid) AS total_answers
+      FROM questionTabel
+      JOIN userTable ON questionTabel.userid = userTable.userid
+      ORDER BY questionTabel.id DESC LIMIT ? OFFSET ?`,[limit,offset]
     );
-
+    console.log("Limit:", limit, "Offset:", offset); // Log the limit and offset in the backend
     // Check if any questions are available
     if (questionsRow.length === 0) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        error: "Not Found",
-        message: "The requested question could not be found.",
-      });
+      return res.status(StatusCodes.OK).json([]);
     }
 
     return res.status(StatusCodes.OK).json(questionsRow);
@@ -81,7 +80,7 @@ async function singleQuestion(req, res) {
         console.log(req.params); 
         console.log(question_id);
         const [rows] = await dbConnection.query(
-          `SELECT questionid,title, description AS content,userid AS user_id FROM questionTabel WHERE questionid = ?`,
+          `SELECT questionid,title,created_at, description AS content,userid AS user_id FROM questionTabel WHERE questionid = ?`,
           [question_id]
         );
 

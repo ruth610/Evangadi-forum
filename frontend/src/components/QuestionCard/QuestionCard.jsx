@@ -4,7 +4,28 @@ import { FaGreaterThan } from "react-icons/fa";
 import style from "./card.module.css";
 
 const QuestionCard = ({ question }) => {
-  console.log(question);
+  // console.log(question);
+  function formatTimestamp(timestamp){
+    const now = new Date();
+    const past = new Date(timestamp);
+    const diffMs = now.getTime() - past.getTime();
+    const diffHours = diffMs / (1000 * 60 * 60);
+  
+    if (diffHours < 1) {
+      const diffMinutes = Math.floor(diffMs / (1000 * 60));
+      return `${diffMinutes} minute${diffMinutes !== 1 ? 's' : ''} ago`;
+    } else if (diffHours < 24) {
+      const hours = Math.floor(diffHours);
+      return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+    } else {
+      return past.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      });
+    }
+  }
+  
 
   return (
     <div className={style.question_container}>
@@ -14,13 +35,16 @@ const QuestionCard = ({ question }) => {
             <IoPersonCircleOutline size={"70px"} />
             <small>{question.username}</small>
           </div>
-
-          <Link
-            to={`/questions/${question.questionid}`}
-            className={style.question_title}
-          >
-            {question.title}
-          </Link>
+          <div className={style.title_date}>
+              <Link
+                to={`/questions/${question.questionid}`}
+                className={style.question_title}
+              >
+                {question.title}
+              </Link>
+              <small>Posted {formatTimestamp(question?.created_at)}</small>
+          </div>
+          
         </div>
         <div>
           <Link

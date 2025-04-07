@@ -39,22 +39,24 @@ async function postAnswer(req, res) {
     console.error(error);
     return res.status(500).json({
       error: "Internal Server Error",
-      message: "An unexpected error occurred. hellooo",
+      message: "An unexpected error occurred.",
     });
   }
 }
 
 async function getAnswer(req, res) {
   const questionId = req.params.question_id;
+  const limit = parseInt(req.query.limit) || 10;
+  const offset = parseInt(req.query.offset) || 0;
   try {
     const [result] = await dbconnection.query(
-      `SELECT answerid, answer as content, username as user_name,userid
+      `SELECT answerid, answer as content, username as user_name,userid,created_at
 FROM answerTable
 JOIN userTable USING (userid)
 WHERE questionid = ?
-ORDER BY answerid;
+ORDER BY answerid LIMIT ? OFFSET ?
   `,
-      [questionId]
+      [questionId,limit,offset]
     );
     if (result.length === 0) {
       return res.status(StatusCodes.NOT_FOUND).json({
@@ -62,7 +64,12 @@ ORDER BY answerid;
         message: "The requested question doesn't have answer.",
       });
     } else {
+      const [[countResult]] = await dbconnection.query(
+        "SELECT COUNT(*) as total FROM answerTable WHERE questionid = ?",
+        [questionId]
+      );
       return res.status(StatusCodes.OK).json({
+        total:countResult.total,
         answer: result,
       });
     }

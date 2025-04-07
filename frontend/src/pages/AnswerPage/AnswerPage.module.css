@@ -8,6 +8,7 @@
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 padding-top: 30px;
 padding-left: 30px ;
+overflow: hidden;
 }
 .answerPageContainer h1 {
  font-size: 26px;
@@ -124,4 +125,29 @@ padding-left: 30px ;
 
 .question_avatar_title svg{
   color: #012456;
+}
+.pagination {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.pageButton {
+  padding: 2px 2px;
+  width: 5%;
+  background-color: #f0f0f0;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  color: black;
+}
+
+.pageButton:hover {
+  background-color: #d9d9d9;
+}
+
+.activePage {
+  background-color: #ff8704;
+  color: white;
 }

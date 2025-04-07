@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axiosConfig from "../../axiosConfig";
 import Layout from "../../components/Layout/Layout";
 import Instance from "../../axiosConfig";
+import { ClipLoader } from "react-spinners";
 
 function AskQuestion() {
   const [redirecting, setRedirecting] = useState("");

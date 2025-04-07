@@ -9,25 +9,46 @@ import Instance from "./../../axiosConfig";
 
 const HomePage = () => {
   const [questions, setQuestions] = useState([]);
+  const [loading,setLoading] = useState(false);
+  const [offset, setOffset] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const limit = 5;
   const { user } = useContext(AppState);
   const [searchTerm, setSearchTerm] = useState("");
 
-  useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        const response = await Instance.get("/question", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-        setQuestions(response.data);
-      } catch (error) {
-        console.error("Error fetching questions:", error);
-      }
-    };
 
-    fetchQuestions();
+  const fetchQuestions = async (offsetToUse) => {
+    setLoading(true);
+    console.log("Fetching with offset above:", offsetToUse); 
+    try {
+      const response = await Instance.get(`/question?limit=${limit}&offset=${offsetToUse}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const newQuestions = response.data;
+      console.log(newQuestions);
+      if (newQuestions.length < limit) {
+        setHasMore(false); 
+    }
+    setQuestions(prev => [...prev, ...newQuestions]);
+    setOffset(prevOffset => prevOffset + limit);
+    } catch (error) {
+      console.error("Error fetching questions:", error);
+    }finally{
+      setLoading(false);
+    }
+  };
+
+
+  useEffect(() => {
+    
+      fetchQuestions(0);
   }, []);
+  const handleLoadMore = () => {
+    console.log("Load More button clicked at offset:", offset);
+    fetchQuestions(offset); // use current offset inside fetch
+  };
   const filteredQuestions = questions.filter((data) =>
     data.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -59,6 +80,11 @@ const HomePage = () => {
         {filteredQuestions.map((data, index) => (
           <QuestionCard key={index} question={data} />
         ))}
+        {
+          <button onClick={handleLoadMore} disabled={loading || !hasMore}>
+            {loading ? "Loading..." : "Load More"}
+          </button>
+        }
       </section>
     </Layout>
   );
