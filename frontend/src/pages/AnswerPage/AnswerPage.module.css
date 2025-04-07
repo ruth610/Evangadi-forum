@@ -151,3 +151,12 @@ overflow: hidden;
   background-color: #ff8704;
   color: white;
 }
+.date{
+  display: flex;
+  padding-top: 10px;
+  padding-left: 50px;
+  color: #636466;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'Times New Roman', Times, serif;
+}

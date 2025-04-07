@@ -81,7 +81,7 @@ const HomePage = () => {
 
         <div className={style.questions}>
           <hr />
-          {filteredQuestions.length > 0 ? (
+          {filteredQuestions?.length > 0 ? (
             filteredQuestions.map((q, index) => (
               <QuestionCard key={index} question={q} />
             ))

@@ -1,39 +1,40 @@
-CREATE TABLE userTable(
-    userid INT(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE userTable (
+    userid INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(20) NOT NULL,
     firstname VARCHAR(20) NOT NULL,
     lastname VARCHAR(20) NOT NULL,
-    email VARCHAR(20) NOT NULL,
-    password VARCHAR(100) NOT NULL,
-    PRIMARY KEY(userid)
+    email VARCHAR(50) NOT NULL,
+    password VARCHAR(100) NOT NULL
 );
-CREATE TABLE questionTabel(
-    id INT(20) NOT NULL AUTO_INCREMENT,
+
+CREATE TABLE questionTable (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     questionid VARCHAR(100) NOT NULL UNIQUE,
-    userid INT(20) NOT NULL,
+    userid INT NOT NULL,
     title VARCHAR(150) NOT NULL,
-    description VARCHAR(300) NOT NULL,
+    description LONGTEXT NOT NULL,
     tag VARCHAR(20),
-    PRIMARY KEY(id, questionid),
-    FOREIGN key(userid) REFERENCES userTable(userid)
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (userid) REFERENCES userTable(userid)
 );
-CREATE TABLE answerTable(
-    answerid INT(20) NOT NULL AUTO_INCREMENT,
-    userid INT(20) NOT NULL,
+
+CREATE TABLE answerTable (
+    answerid INT AUTO_INCREMENT PRIMARY KEY,
+    userid INT NOT NULL,
     questionid VARCHAR(100) NOT NULL,
-    answer VARCHAR(200) NOT NULL,
-    PRIMARY KEY(answerid),
-    FOREIGN key(userid) REFERENCES userTable(userid),
-    FOREIGN key(questionid) REFERENCES questionTabel(questionid)
+    answer LONGTEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (userid) REFERENCES userTable(userid),
+    FOREIGN KEY (questionid) REFERENCES questionTable(questionid)
 );
+
 CREATE TABLE votes (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    userid INT(20) NOT NULL,
-    answerid INT(20) NOT NULL,
+    userid INT NOT NULL,
+    answerid INT NOT NULL,
     vote_type ENUM('up', 'down') NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (userid) REFERENCES userTable(userid),
     FOREIGN KEY (answerid) REFERENCES answerTable(answerid),
     UNIQUE(userid, answerid)
 );
-

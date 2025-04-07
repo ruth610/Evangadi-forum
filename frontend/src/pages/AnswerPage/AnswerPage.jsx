@@ -9,6 +9,26 @@ import Vote from "../../components/vote/Vote";
 import { AppState } from "../../components/protectedRoute/ProtectedRoute";
 
 function AnswerPage() {
+  function formatTimestamp(timestamp){
+    const now = new Date();
+    const past = new Date(timestamp);
+    const diffMs = now.getTime() - past.getTime();
+    const diffHours = diffMs / (1000 * 60 * 60);
+  
+    if (diffHours < 1) {
+      const diffMinutes = Math.floor(diffMs / (1000 * 60));
+      return `${diffMinutes} minute${diffMinutes !== 1 ? 's' : ''} ago`;
+    } else if (diffHours < 24) {
+      const hours = Math.floor(diffHours);
+      return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+    } else {
+      return past.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      });
+    }
+  }
   const { questionid } = useParams();
   const [question, setQuestion] = useState({});
   const [answers, setAnswers] = useState([]);
@@ -109,6 +129,7 @@ function AnswerPage() {
                   </div>
                   <div className={styles.title_container}>
                     <p>{answer?.content}</p>
+                    <small className={styles.date}>{formatTimestamp(answer?.created_at)}</small>
                   </div>
                 </div>
                 <div className={styles.votes}>
