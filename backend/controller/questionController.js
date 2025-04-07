@@ -63,8 +63,11 @@ async function getallQuestion(req, res) {
     if (questionsRow.length === 0) {
       return res.status(StatusCodes.OK).json([]);
     }
+    const [[countResult]] = await dbConnection.query(
+            "SELECT COUNT(*) as total FROM questionTabel"
+          );
 
-    return res.status(StatusCodes.OK).json(questionsRow);
+    return res.status(StatusCodes.OK).json({questions:questionsRow,total:countResult.total});
   } catch (error) {
     console.error("Error details:", error.message);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

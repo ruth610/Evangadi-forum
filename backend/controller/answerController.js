@@ -1,9 +1,9 @@
-const dbconnection = require('./../db/dbConfig')
+const dbConnection = require('./../db/dbConfig')
 const { StatusCodes } = require("http-status-codes");
 // post answer for a question
 async function postAnswer(req, res) {
   try {
-    const {answer , questionid} = req.body;
+    const {questionid, answer } = req.body;
     console.log(questionid,'onpost')
     const { userid } = req.user;
 
@@ -16,7 +16,7 @@ async function postAnswer(req, res) {
     }
 
     // Check if question exists
-    const [questionExists] = await dbconnection.query(
+    const [questionExists] = await dbConnection.query(
       "SELECT * FROM questionTabel WHERE questionid = ?",
       [questionid]
     );
@@ -29,8 +29,8 @@ async function postAnswer(req, res) {
     }
 
     // Insert answer into the database
-    await dbconnection.query(
-      "INSERT INTO answerTable(userid, questionid, answer	) VALUES (?, ?, ?)",
+    await dbConnection.query(
+      "INSERT INTO answertable(userid, questionid, answer	) VALUES (?, ?, ?)",
       [userid, questionid, answer]
     );
 
@@ -49,7 +49,7 @@ async function getAnswer(req, res) {
   const limit = parseInt(req.query.limit) || 10;
   const offset = parseInt(req.query.offset) || 0;
   try {
-    const [result] = await dbconnection.query(
+    const [result] = await dbConnection.query(
       `SELECT answerid, answer as content, username as user_name,userid,created_at
 FROM answerTable
 JOIN userTable USING (userid)
@@ -64,7 +64,7 @@ ORDER BY answerid LIMIT ? OFFSET ?
         message: "The requested question doesn't have answer.",
       });
     } else {
-      const [[countResult]] = await dbconnection.query(
+      const [[countResult]] = await dbConnection.query(
         "SELECT COUNT(*) as total FROM answerTable WHERE questionid = ?",
         [questionId]
       );

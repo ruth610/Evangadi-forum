@@ -1,8 +1,7 @@
 const dbConnection = require("../db/dbConfig"); 
 
 vote = async (req, res) => {
-    const { userId, answerId, voteType } = req.body;
-
+    const {userId, answerId, voteType } = req.body;
     try {
         const [existingVote] = await dbConnection.query(
             "SELECT * FROM votes WHERE userid = ? AND answerid = ?",
@@ -32,7 +31,7 @@ vote = async (req, res) => {
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Internal Server Error" });
+        return res.status(500).json({ error: "Internal Server Error" ,mes:error,user:userId});
     }
 };
 
@@ -51,13 +50,13 @@ getVotes = async (req, res) => {
             [answerId]
         );
 
-        res.json({
+        return res.json({
             upvotes: upvotes[0].count,
             downvotes: downvotes[0].count,
         });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Internal Server Error" });
+        console.error(error.message);
+        return res.status(500).json({ error: "Internal Server Error"});
     }
 };
 

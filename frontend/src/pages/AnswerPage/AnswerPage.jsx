@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import styles from "./AnswerPage.module.css";
 import Layout from "../../components/Layout/Layout";
@@ -6,6 +6,7 @@ import { ClipLoader } from "react-spinners";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import Instance from "../../axiosConfig";
 import Vote from "../../components/vote/Vote";
+import { AppState } from "../../components/protectedRoute/ProtectedRoute";
 
 function AnswerPage() {
   const { questionid } = useParams();
@@ -19,7 +20,7 @@ function AnswerPage() {
 
   const limit = 5;
   const token = localStorage.getItem("token");
-
+  const {user} = useContext(AppState)
   useEffect(() => {
     fetchQuestionAndAnswers(1); // Reset to page 1 on questionid change
   }, [questionid]);
@@ -71,6 +72,7 @@ function AnswerPage() {
       setError("");
       fetchQuestionAndAnswers(1); // Reload page 1 after posting
     } catch (err) {
+      console.log(err)
       setError(err.response?.data?.message || "Failed to submit answer.");
     } finally {
       setLoading(false);
@@ -110,7 +112,7 @@ function AnswerPage() {
                   </div>
                 </div>
                 <div className={styles.votes}>
-                  <Vote answerId={answer?.answerid} userId={answer?.userid} />
+                  <Vote answerId={answer?.answerid} userId={user.userid} />
                 </div>
               </div>
             ))

@@ -25,4 +25,15 @@ CREATE TABLE answerTable(
     PRIMARY KEY(answerid),
     FOREIGN key(userid) REFERENCES userTable(userid),
     FOREIGN key(questionid) REFERENCES questionTabel(questionid)
-)
+);
+CREATE TABLE votes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    userid INT(20) NOT NULL,
+    answerid INT(20) NOT NULL,
+    vote_type ENUM('up', 'down') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (userid) REFERENCES userTable(userid),
+    FOREIGN KEY (answerid) REFERENCES answerTable(answerid),
+    UNIQUE(userid, answerid)
+);
+

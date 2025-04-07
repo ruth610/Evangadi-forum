@@ -2,7 +2,6 @@ import React, { useState, useRef } from "react";
 import classes from "./askQuestion.module.css";
 import AI from "@mui/icons-material/ArrowCircleRight";
 import { useNavigate } from "react-router-dom";
-import axiosConfig from "../../axiosConfig";
 import Layout from "../../components/Layout/Layout";
 import Instance from "../../axiosConfig";
 import { ClipLoader } from "react-spinners";
@@ -19,7 +18,11 @@ function AskQuestion() {
     setLoading(true);
     const titleValue = title.current.value;
     const descValue = description.current.value;
-    
+    if (!titleValue || !descValue) {
+      setRedirecting("Please fill out both fields.");
+      setLoading(false);
+      return;
+    }
     try {
       await Instance.post(
         "/question",
@@ -36,6 +39,7 @@ function AskQuestion() {
 
       setRedirecting("Question posted successfully");
       // console.log(postquest);
+      
       navigate("/home");
     } catch (error) {
       if (error.response) {

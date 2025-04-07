@@ -13,9 +13,9 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
+      <Route path='/howItWorks' element={<HowItWorks />} />
       <Route element={<ProtectedRoute />}>
         <Route path="/home" element={<HomePage />} />
-        <Route path='/howItWorks' element={<HowItWorks />} />
         <Route path="/Ask" element={<AskQuestion />} />
         <Route path="/questions/:questionid" element={<QuestionDetail />} />
       </Route>

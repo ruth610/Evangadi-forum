@@ -4,54 +4,58 @@ import style from "./HomePage.module.css";
 import { AppState } from "../../components/protectedRoute/ProtectedRoute";
 import QuestionCard from "../../components/QuestionCard/QuestionCard";
 import Layout from "../../components/Layout/Layout";
-import axiosConfig from "./../../axiosConfig";
 import Instance from "./../../axiosConfig";
 
 const HomePage = () => {
   const [questions, setQuestions] = useState([]);
-  const [loading,setLoading] = useState(false);
-  const [offset, setOffset] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [totalQuestions, setTotalQuestions] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const limit = 5;
   const { user } = useContext(AppState);
   const [searchTerm, setSearchTerm] = useState("");
 
-
-  const fetchQuestions = async (offsetToUse) => {
+  // Fetch questions for current page
+  const fetchQuestions = async (pageNumber) => {
+    const offset = (pageNumber - 1) * limit;
     setLoading(true);
-    console.log("Fetching with offset above:", offsetToUse); 
+
     try {
-      const response = await Instance.get(`/question?limit=${limit}&offset=${offsetToUse}`, {
+      const response = await Instance.get(`/question?limit=${limit}&offset=${offset}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      const newQuestions = response.data;
-      console.log(newQuestions);
-      if (newQuestions.length < limit) {
-        setHasMore(false); 
-    }
-    setQuestions(prev => [...prev, ...newQuestions]);
-    setOffset(prevOffset => prevOffset + limit);
+
+      const total = response.data.total; // assuming backend gives total questions
+      const newQuestions = response.data.questions;
+
+      setQuestions(newQuestions);
+      setTotalQuestions(total || 0);
     } catch (error) {
       console.error("Error fetching questions:", error);
-    }finally{
+    } finally {
       setLoading(false);
     }
   };
 
-
   useEffect(() => {
-    
-      fetchQuestions(0);
-  }, []);
-  const handleLoadMore = () => {
-    console.log("Load More button clicked at offset:", offset);
-    fetchQuestions(offset); // use current offset inside fetch
+    fetchQuestions(currentPage);
+  }, [currentPage]);
+
+  const totalPages = Math.ceil(totalQuestions / limit);
+
+  const handlePageChange = (page) => {
+    if (page === currentPage) return;
+    setCurrentPage(page);
   };
-  const filteredQuestions = questions.filter((data) =>
-    data.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+
+  const filteredQuestions = searchTerm
+    ? questions.filter((q) =>
+        q.title.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : questions;
+
   return (
     <Layout>
       <section className={style.homepage}>
@@ -59,11 +63,11 @@ const HomePage = () => {
           <Link to="/ask">
             <button className={style.askButton}>Ask Question</button>
           </Link>
-
           <div className={style.welcome}>
             <p>Welcome: {user?.username}</p>
           </div>
         </div>
+
         {/* Search Bar */}
         <div className={style.searchContainer}>
           <input
@@ -74,17 +78,34 @@ const HomePage = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
+
         <div className={style.questions}>
           <hr />
+          {filteredQuestions.length > 0 ? (
+            filteredQuestions.map((q, index) => (
+              <QuestionCard key={index} question={q} />
+            ))
+          ) : (
+            <p>No questions found.</p>
+          )}
         </div>
-        {filteredQuestions.map((data, index) => (
-          <QuestionCard key={index} question={data} />
-        ))}
-        {
-          <button onClick={handleLoadMore} disabled={loading || !hasMore}>
-            {loading ? "Loading..." : "Load More"}
-          </button>
-        }
+
+        {/* Pagination */}
+        {searchTerm === "" && totalPages > 1 && (
+          <div className={style.pagination}>
+            {[...Array(totalPages)].map((_, index) => (
+              <button
+                key={index}
+                onClick={() => handlePageChange(index + 1)}
+                className={`${style.pageButton} ${
+                  currentPage === index + 1 ? style.active : ""
+                }`}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
+        )}
       </section>
     </Layout>
   );
