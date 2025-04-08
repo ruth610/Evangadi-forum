@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import style from "./HomePage.module.css";
+import style from "./homePage.module.css";
 import { AppState } from "../../components/protectedRoute/ProtectedRoute";
 import QuestionCard from "../../components/QuestionCard/QuestionCard";
 import Layout from "../../components/Layout/Layout";
