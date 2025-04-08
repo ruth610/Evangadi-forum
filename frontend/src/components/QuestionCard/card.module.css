@@ -18,13 +18,13 @@
   
 }
 .question_line:hover{
-background-color:#f0f0f0;
+background-color:var(--card-hover-bg);
 }
 
 
 .question_title{
   font-size: clamp(1rem, 4vw, 1.5rem);
-  color: #104175;
+  color: var(--primary-color);
 }
 .qn_title  :hover {
   animation: slideIcon 0.4s ease-in-out;  
@@ -58,7 +58,7 @@ background-color:#f0f0f0;
 }
 
 .question_line:hover .user svg  {
-  background-color: #d1d1d1;
+  /* background-color: #d1d1d1; */
 }
 
 .expand_icon{
@@ -77,12 +77,12 @@ transition: transform 0.4s ease-in-out;
 
 .question_container svg{
   cursor: pointer;
-  color: #012456;
+  color: var(--next-page-color);
 }
 
 .timeAgo {
   font-size: 14px;
-  color: #888;
+  color: var(--time-color);
   margin-top: 5px;
   font-style: italic;
 }

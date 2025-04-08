@@ -6,6 +6,7 @@ import Layout from "../../components/Layout/Layout";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { BiUpvote, BiDownvote } from "react-icons/bi";
 import { formatDistanceToNow } from "date-fns";
+import Loader from "../../components/Loader/Loader";
 
 function AnswerPage() {
   const { questionid } = useParams();
@@ -15,6 +16,7 @@ function AnswerPage() {
   const [error, setError] = useState("");
   const [isVoting, setIsVoting] = useState(false);
   const token = localStorage.getItem("token");
+ const [Loading , setLoading] =  useState(true)
 
   useEffect(() => {
     fetchQuestionAndAnswers();
@@ -31,11 +33,12 @@ function AnswerPage() {
       const answersResponse = await axios.get(`/answer/${questionid}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log(answersResponse.data.answer);
       setAnswers(answersResponse.data.answer);
+      setLoading(false)
     } catch (error) {
       if (error.response) {
         setError(error?.response?.data?.message);
+        setLoading(false);
       }
     }
   }
@@ -135,27 +138,21 @@ function AnswerPage() {
   }
 
   // time formatter function
-  function formatTimeAgo(dateString) {
-    if (!dateString) return "just now";
+ function formatTimeAgo(dateString) {
+   if (!dateString) return "just now";
 
-    try {
-      // Replace space with T for ISO compliance
-      const utcDate = new Date(dateString.replace(" ", "T"));
+   try {
+     const utcDate = new Date(dateString.replace(" ", "T"));
+     return formatDistanceToNow(utcDate, {
+       addSuffix: true,
+       includeSeconds: true,
+     });
+   } catch (error) {
+     console.error("Error formatting time:", error);
+     return "recently";
+   }
+ }
 
-      // Convert UTC to local time using local Date object
-      const localTime = new Date(
-        utcDate.getTime() + new Date().getTimezoneOffset() * 60000 * -1
-      );
-
-      return formatDistanceToNow(localTime, {
-        addSuffix: true,
-        includeSeconds: true,
-      });
-    } catch (error) {
-      console.error("Error formatting time:", error);
-      return "recently";
-    }
-  }
 
   return (
     <Layout>
@@ -169,7 +166,9 @@ function AnswerPage() {
         <div className={styles.answersSection}>
           <h3>Answer From The Community</h3>
           <hr />
-          {answers.length > 0 ? (
+          {Loading ? (
+            <Loader />
+          ) : answers.length > 0 ? (
             answers.map((answer) => (
               <div
                 key={answer.answerid}
@@ -220,7 +219,7 @@ function AnswerPage() {
             ))
           ) : (
             <span>
-              <p style={{ color: "red" }}>{error}</p>
+              <p>{error}</p>
               <p>No answers yet. Be the first to answer!</p>
             </span>
           )}

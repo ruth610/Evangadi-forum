@@ -1,0 +1,16 @@
+.loader_container {
+    /* position: fixed;  */
+    /* top: 50%;
+    left: 50%; */
+    position: relative;
+    /* transform: translate(-50%, -50%); */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   /* margin-left: 200px; */
+  }
+  
+  .loader_container div {
+    scale: 0.6;
+  }
+  

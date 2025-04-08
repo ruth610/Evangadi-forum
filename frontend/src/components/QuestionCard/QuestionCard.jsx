@@ -3,9 +3,7 @@ import { IoPersonCircleOutline } from "react-icons/io5";
 import { FaGreaterThan } from "react-icons/fa";
 import { formatDistanceToNow } from "date-fns"; // You can use date-fns for formatting the time
 import style from "./card.module.css";
-// import { formatDistanceToNow } from "date-fns";
 
-/////////////
     function formatTimeAgo(dateString) {
       if (!dateString) return "just now";
 
@@ -14,9 +12,8 @@ import style from "./card.module.css";
         const utcDate = new Date(dateString.replace(" ", "T"));
 
         // Convert UTC to local time using local Date object
-        const localTime = new Date(
-          utcDate.getTime() + new Date().getTimezoneOffset() * 60000 * -1
-        );
+      const localTime = new Date(utcDate);
+
 
         return formatDistanceToNow(localTime, {
           addSuffix: true,

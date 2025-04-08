@@ -88,7 +88,7 @@ async function singleQuestion(req, res) {
     try {
         const { question_id } = req.params; 
         const [rows] = await dbConnection.query(
-          `SELECT questionid,title, description AS content,userid AS user_id FROM questionTable WHERE questionid = ?`,
+          `SELECT questionid,title, description AS content,userid AS userid FROM questionTable WHERE questionid = ?`,
           [question_id]
         );
 

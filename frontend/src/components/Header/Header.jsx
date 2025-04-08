@@ -1,16 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./header.module.css";
-import Logo from "../../assets/HeaderLogo.png";
+import whiteLogo from "../../assets/HeaderLogo.png";
+import darkLogo from "../../assets/evangadi-logo-footer.png";
 import { Link, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { RiMenu3Fill } from "react-icons/ri";
 import { useState } from "react";
+import { Themecontext } from "../ThemeToggle/ThemeProvider";
 
 function Header() {
   const [mobile, setMobile] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const isLandingPage = location.pathname === "/";
+  const [theme] = useContext(Themecontext);
+ console.log(theme);
+ 
+  
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -22,7 +28,7 @@ function Header() {
   return (
     <header className={styles.header}>
       <Link to="/home">
-        <img src={Logo} alt="logo" />
+        {theme ? <img src={whiteLogo} alt="logo" /> : <img src={darkLogo} alt="logo" />}
       </Link>
 
       <div className={styles.navbar}>

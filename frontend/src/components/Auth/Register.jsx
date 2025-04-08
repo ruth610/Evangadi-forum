@@ -80,14 +80,6 @@ function Register({ setShowLogin }) {
         </span>
         <form action="" onSubmit={handlesubmit}>
           <div>
-            <input ref={userNameDom} type="text" placeholder="username" />
-          </div>
-          <div className={styles.names}>
-            <input type="text" placeholder="first name" ref={firstNameDom} />
-            <input type="text" placeholder="last name" ref={lastNameDom} />
-          </div>
-
-          <div>
             <input
               type="email"
               placeholder="email"
@@ -95,6 +87,14 @@ function Register({ setShowLogin }) {
               name="email"
               autoComplete="email"
             />
+          </div>
+          <div className={styles.names}>
+            <input type="text" placeholder="first name" ref={firstNameDom} />
+            <input type="text" placeholder="last name" ref={lastNameDom} />
+          </div>
+
+          <div>
+            <input ref={userNameDom} type="text" placeholder="username" />
           </div>
 
           <div className={styles.password_container}>

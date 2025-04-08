@@ -18,20 +18,20 @@ CREATE TABLE questionTable(
     description TEXT NOT NULL,
     tag VARCHAR(20),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    vote_count INT NOT NULL DEFAULT 0;
-PRIMARY KEY(id),
-FOREIGN KEY (userid) REFERENCES userTable(userid) ON DELETE CASCADE
+    vote_count INT NOT NULL DEFAULT 0,
+    PRIMARY KEY(id),
+    FOREIGN KEY (userid) REFERENCES userTable(userid) ON DELETE CASCADE
 );
 CREATE TABLE answerTable(
     answerid INT NOT NULL AUTO_INCREMENT,
     userid INT NOT NULL,
     questionid VARCHAR(100) NOT NULL,
     answer TEXT NOT NULL,
-    vote_count INT NOT NULL DEFAULT 0;
-created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-PRIMARY KEY(answerid),
-FOREIGN KEY (userid) REFERENCES userTable(userid) ON DELETE CASCADE,
-FOREIGN KEY (questionid) REFERENCES questionTable(questionid) ON DELETE CASCADE
+    vote_count INT NOT NULL DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(answerid),
+    FOREIGN KEY (userid) REFERENCES userTable(userid) ON DELETE CASCADE,
+    FOREIGN KEY (questionid) REFERENCES questionTable(questionid) ON DELETE CASCADE
 );
 CREATE TABLE question_vote(
     id INT AUTO_INCREMENT PRIMARY KEY,

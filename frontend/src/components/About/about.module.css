@@ -6,7 +6,7 @@
 }
 
 .question_paragraph p {
-  color: #67748e;
+  color: var(--text-color);
   font-size: 16px;
   margin-left: 10px;
   margin-top: 20px;
@@ -19,7 +19,7 @@
 }
 
 .how_it_works button {
-  background-color: #ff8000;
+  background-color:var(--btn-hover);
   color: white;
   font-size: 16px;
   font-weight: bold;
@@ -33,13 +33,14 @@
 
 /* Hover Effect */
 .how_it_works button:hover {
-  background-color: #e67300;
+  /* background-color: #e67300; */
+  opacity: 0.9;
 }
 .evangadi_questiona_answer {
   padding: 0 30px;
 }
 .evangadi_questiona_answer span {
-  color: #fe8303;
+  color: var(--btn-hover);
 }
 @media (min-width: 870px) {
   .question_paragraph p {

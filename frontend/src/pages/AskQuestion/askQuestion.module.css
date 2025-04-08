@@ -4,8 +4,8 @@
   flex-direction: column;
   margin: auto;
   margin-bottom: 10px;
+  color: var(--non-default-color);
 }
-
 
 .summary {
   margin-top: 30px;
@@ -30,11 +30,9 @@
   margin-bottom: 20px;
 }
 
-
 body:has(.summary:hover) .title hr {
   width: 45%;
 }
-
 
 .title h3 {
   font-size: 25px;
@@ -44,9 +42,8 @@ body:has(.summary:hover) .title hr {
 .post_question {
   margin-top: 15px;
   padding: 20px;
-  box-shadow: 3px 5px 5px rgb(201, 199, 199);
+  box-shadow: 3px 5px 5px var(--bg-color);
   border-radius: 10px;
-
 }
 
 form {
@@ -61,7 +58,7 @@ button {
   padding: 10px;
   width: 180px;
   display: block;
-  background-color: rgb(104, 104, 255);
+  background-color: var(--btn-bg-color);
   color: white;
   border: none;
   border-radius: 5px;
@@ -70,9 +67,9 @@ button {
 
 button:hover {
   cursor: pointer;
-  background-color: rgb(145, 145, 252);
+  /* background-color: rgb(145, 145, 252); */
+  opacity: 0.9;
 }
-
 
 label {
   font-weight: bold;
@@ -86,9 +83,6 @@ textarea {
 
 @media screen and (max-width: 1300px) {
   .container {
-    
     width: 80%;
   }
 }
-
-

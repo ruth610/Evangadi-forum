@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom';
-import {RingLoader} from 'react-spinners';
+import { ScaleLoader } from "react-spinners";
 import Instance from '../../axiosConfig';
 import style from './protect.module.css';
 export const AppState = createContext();
@@ -38,10 +38,9 @@ const ProtectedRoute = () => {
   },[navigate]);
     if(loading){
        return <div className={style.loader_container}>
-                <RingLoader color="#FF8704" size={60} speedMultiplier={0.8}/>
+                <ScaleLoader color="#FF8704" size={60} speedMultiplier={0.8}/>
             </div> 
     }
-  
   return (
     <AppState.Provider value={{user,setUser}}>
         <Outlet />

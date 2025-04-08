@@ -1,7 +1,8 @@
 .container {
   padding: 40px;
-  background-color: #f8f8f8;
+  background-color: var(--bg-color);
   min-height: 100vh; /* Ensure full viewport height */
+    color: var(--non-default-color);
 }
 
 .content {
@@ -11,7 +12,7 @@
 }
 
 .content h1 {
-  color: #333;
+  color: var(--text-color);
   margin-bottom: 30px;
   text-align: center;
 }
@@ -19,13 +20,13 @@
 .section {
   margin-bottom: 30px;
   padding: 20px;
-  background-color: white;
+  background-color: var(--bg-color);
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px var(--box-shadow);
 }
 
 .section h2 {
-  color: #444;
+  color: var(--non-default-color);
   margin-bottom: 15px;
 }
 

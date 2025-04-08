@@ -7,7 +7,7 @@
   height: 210px;
   padding-left: 33px;
   position: absolute;
-  bottom: -230px;
+  bottom: -205px;
   width: 100%;
 }
 .logo {
@@ -61,30 +61,49 @@
   flex-direction: column;
   justify-content: center;
   gap: 15px;
+  margin-left:10%;
 }
 .social {
   display: flex;
   justify-content: center;
   gap: 15px;
 }
+.links_container{
+  display: flex;
+  width:100%;
+  justify-content: space-around;
+  /* background-color: #37415a; */
+}
+@media (max-width:790px){
+  .logo {
+ 
+  margin-left:0;
+}
+  .outer_container {
+  padding-left: 10px;
+  }
+}
 @media (max-width: 556px) {
   .outer_container {
     margin: 0 auto;
     display: flex;
     display: block;
-    height: 476px;
-      bottom: -490px;
+    height:267px;
+      bottom: -285px;
+      
   }
 
   .logo {
     display: block;
     padding-top: 30px;
     padding-bottom: 15px;
-    /* padding-left: 20px; */
+    margin-left: 10%;
   }
   .social {
     justify-content: start;
     margin-top: 10px;
     margin-bottom: 10px;
   }
+
 }
+

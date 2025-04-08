@@ -1,0 +1,102 @@
+:root {
+  --toggle-light: #ffffff;  /* White for light mode */
+  --toggle-dark: #e0e0e0;   /* Light gray for dark mode */
+}
+
+/* Main toggle button */
+.toggle {
+  --size: 4rem;
+  --circle-size: 1.8rem;
+  --transition: all 0.4s ease;
+
+  position: fixed;
+  top:70px;
+  right: 20px;
+  width: var(--size);
+  height: calc(var(--circle-size) + 0.6rem);
+  background: var(--toggle-light);  /* Light background in light mode */
+  border-radius: 9999px;
+  padding: 0.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: var(--transition);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.toggle.dark {
+  background: var(--toggle-dark); /* Light gray background in dark mode */
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+/* Circle that slides inside */
+.toggleCircle {
+  position: absolute;
+  height: var(--circle-size);
+  width: var(--circle-size);
+  background: #ffffff;
+  border-radius: 50%;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 0.3rem;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.toggle.dark .toggleCircle {
+  transform: translateX(2.2rem);
+  background: #111;
+  box-shadow: 0 3px 8px rgba(255, 255, 255, 0.2);
+}
+
+/* Icon styles */
+.icon {
+  font-size: 1.3rem;
+  transition: var(--transition);
+}
+
+.sun {
+  color: #f59e0b; /* amber */
+  filter: drop-shadow(0 0 4px rgba(245, 158, 11, 0.4));
+}
+
+.moon {
+  color: #f3f4f6; /* light gray */
+  filter: drop-shadow(0 0 4px rgba(243, 244, 246, 0.4));
+}
+
+/* Hover/Active effect */
+.toggle:hover {
+  transform: scale(1.05);
+  opacity: 0.95;
+}
+
+.toggle:active {
+  transform: scale(0.98);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .toggle {
+    --size: 3.4rem;
+    --circle-size: 1.5rem;
+  }
+
+  .toggle.dark .toggleCircle {
+    transform: translateX(1.9rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .toggle {
+    --size: 3rem;
+    --circle-size: 1.2rem;
+  }
+
+  .toggle.dark .toggleCircle {
+    transform: translateX(1.6rem);
+  }
+}

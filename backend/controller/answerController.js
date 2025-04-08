@@ -60,7 +60,7 @@ async function getAnswer(req, res) {
       SELECT vote_type 
       FROM answer_votes 
       WHERE answer_votes.answerid = answerTable.answerid 
-        AND answer_votes.user_id = ?
+        AND answer_votes.userid = ?
     ) AS user_vote_status
   FROM answerTable
   JOIN userTable ON answerTable.userid = userTable.userid
@@ -93,7 +93,7 @@ async function voteAnswer(req, res) {
 
     // Check if user has already voted on this answer
     const [existingVote] = await dbconnection.query(
-      "SELECT vote_type FROM answer_votes WHERE user_id = ? AND answerid = ?",
+      "SELECT vote_type FROM answer_votes WHERE userid = ? AND answerid = ?",
       [userid, answerId]
     );
 
@@ -105,7 +105,7 @@ async function voteAnswer(req, res) {
       if (existingVote[0].vote_type === voteType) {
         // Remove vote (unvote)
         await dbconnection.query(
-          "DELETE FROM answer_votes WHERE user_id = ? AND answerid = ?",
+          "DELETE FROM answer_votes WHERE userid = ? AND answerid = ?",
           [userid, answerId]
         );
         action = "removed";
@@ -113,7 +113,7 @@ async function voteAnswer(req, res) {
       } else {
         // Switch vote type (upvote to downvote or vice versa)
         await dbconnection.query(
-          "UPDATE answer_votes SET vote_type = ? WHERE user_id = ? AND answerid = ?",
+          "UPDATE answer_votes SET vote_type = ? WHERE userid = ? AND answerid = ?",
           [voteType, userid, answerId]
         );
         action = "switched";
@@ -122,7 +122,7 @@ async function voteAnswer(req, res) {
     } else {
       // New vote
       await dbconnection.query(
-        "INSERT INTO answer_votes (user_id, answerid, vote_type) VALUES (?, ?, ?)",
+        "INSERT INTO answer_votes (userid, answerid, vote_type) VALUES (?, ?, ?)",
         [userid, answerId, voteType]
       );
       action = "added";
@@ -142,7 +142,7 @@ async function voteAnswer(req, res) {
     );
 
     const [currentVote] = await dbconnection.query(
-      "SELECT vote_type FROM answer_votes WHERE user_id = ? AND answerid = ?",
+      "SELECT vote_type FROM answer_votes WHERE userid = ? AND answerid = ?",
       [userid, answerId]
     );
 

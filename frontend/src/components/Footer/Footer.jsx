@@ -21,33 +21,35 @@ function Footer() {
           </div>
         </div>
 
-        <div className={styles.links}>
-          <ul>
-            <li>
-              <h3>Useful Link</h3>
-            </li>
-            <li>
-              <a href="#">How it works</a>
-            </li>
-            <li>
-              <a href="#">Terms of Service</a>
-            </li>
-            <li>
-              <a href="#">Privacy Policy</a>
-            </li>
-          </ul>
-        </div>
+        <span className={styles.links_container}>
+          <div className={styles.links}>
+            <ul>
+              <li>
+                <h3>Useful Link</h3>
+              </li>
+              <li>
+                <a href="#">How it works</a>
+              </li>
+              <li>
+                <a href="#">Terms of Service</a>
+              </li>
+              <li>
+                <a href="#">Privacy Policy</a>
+              </li>
+            </ul>
+          </div>
 
-        <div className={styles.links}>
-          <ul>
-            <li>
-              <h3>Contact Info</h3>
-            </li>
-            <li>Evangadi Networks</li>
-            <li>support@evangadi.com</li>
-            <li>+1-202-386-2702</li>
-          </ul>
-        </div>
+          <div className={styles.links}>
+            <ul>
+              <li>
+                <h3>Contact Info</h3>
+              </li>
+              <li>Evangadi Networks</li>
+              <li>support@evangadi.com</li>
+              <li>+1-202-386-2702</li>
+            </ul>
+          </div>
+        </span>
       </div>
     </>
   );
