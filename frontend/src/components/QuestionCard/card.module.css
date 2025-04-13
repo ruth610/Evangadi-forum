@@ -50,6 +50,10 @@ background-color:var(--card-hover-bg);
   width: 80px;
   min-width: 80px;
 }
+.user small {
+  color: var(--non-default-color);
+
+}
 
 .user svg {
   border-radius: 50%;

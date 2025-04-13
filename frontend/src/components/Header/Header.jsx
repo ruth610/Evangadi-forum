@@ -14,7 +14,7 @@ function Header() {
   const location = useLocation();
   const isLandingPage = location.pathname === "/";
   const [theme] = useContext(Themecontext);
- console.log(theme);
+
  
   
 

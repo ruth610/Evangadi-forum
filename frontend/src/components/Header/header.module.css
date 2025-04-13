@@ -116,9 +116,8 @@ position: sticky;
 
 @media (max-width: 480px) {
   .header  {
-    padding: 10px;
-    margin-left: -20px;
-    justify-content: center;
+    padding:  10px 20px;
+    justify-content: space-between;
 
   }
  .header img {
