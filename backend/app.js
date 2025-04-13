@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const PORT = 9000;
+const PORT = 5500;
 const dbconnection = require("./db//dbConfig");
 
 //importing user question and answer route
