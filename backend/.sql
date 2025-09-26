@@ -33,16 +33,16 @@ CREATE TABLE answerTable(
     FOREIGN KEY (userid) REFERENCES userTable(userid) ON DELETE CASCADE,
     FOREIGN KEY (questionid) REFERENCES questionTable(questionid) ON DELETE CASCADE
 );
-CREATE TABLE question_vote(
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    userid INT NOT NULL,
-    questionid VARCHAR(100) NOT NULL,
-    vote_type ENUM('upvote', 'downvote') NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE KEY unique_question_vote (userid, questionid),
-    FOREIGN KEY (userid) REFERENCES userTable(userid) ON DELETE CASCADE,
-    FOREIGN KEY (questionid) REFERENCES questionTable(questionid) ON DELETE CASCADE
-);
+-- CREATE TABLE question_vote(
+--     id INT AUTO_INCREMENT PRIMARY KEY,
+--     userid INT NOT NULL,
+--     questionid VARCHAR(100) NOT NULL,
+--     vote_type ENUM('upvote', 'downvote') NOT NULL,
+--     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--     UNIQUE KEY unique_question_vote (userid, questionid),
+--     FOREIGN KEY (userid) REFERENCES userTable(userid) ON DELETE CASCADE,
+--     FOREIGN KEY (questionid) REFERENCES questionTable(questionid) ON DELETE CASCADE
+-- );
 CREATE TABLE answer_votes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     userid INT NOT NULL,
